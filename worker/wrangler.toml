@@ -1,0 +1,12 @@
+# Cloudflare Worker for App Review Insights. Deployed by .github/workflows/deploy-worker.yml.
+name = "app-review-insights"
+main = "src/index.js"
+compatibility_date = "2025-06-01"
+
+# 4 new (uncached) apps per minute per visitor; cached apps don't count
+[[ratelimits]]
+name = "RATE_LIMITER"
+namespace_id = "1003"
+simple = { limit = 4, period = 60 }
+
+# GEMINI_API_KEY is set as an encrypted secret by the deploy workflow, never in this file.
