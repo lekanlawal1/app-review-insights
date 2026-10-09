@@ -8,7 +8,7 @@ const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<
 const API = (window.REVIEWS_API || "").replace(/\/$/, "");
 const PAGES = 10;                                     // Apple serves at most 10 pages of 50
 const fmt1 = (v) => (v == null ? "n/a" : v.toFixed(1));
-const pct = (v) => (v == null ? "n/a" : `${Math.round(v * 100)}%`);
+const pct = (v) => (v == null ? "n/a" : v > 0 && v < 0.005 ? "under 1%" : `${Math.round(v * 100)}%`);
 const stars = (n) => "★".repeat(n) + "☆".repeat(5 - n);
 const monthDay = (d) => new Date(d + "T00:00:00Z").toLocaleDateString("en-CA", { month: "short", day: "numeric", timeZone: "UTC" });
 const fullDate = (d) => new Date(d + "T00:00:00Z").toLocaleDateString("en-CA", { year: "numeric", month: "short", day: "numeric", timeZone: "UTC" });
