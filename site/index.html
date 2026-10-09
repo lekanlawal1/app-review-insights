@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>App Review Insights | Lekan Lawal</title>
+<meta name="description" content="Pick any iPhone app and see what its users love, hate and ask for, from its latest App Store reviews. Every quote is checked against the real review.">
+<link rel="icon" href="https://lekanlawal1.github.io/portfolio-site/assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<script src="https://lekanlawal1.github.io/portfolio-site/portfolio-bar.js" data-project="triage" defer></script>
+<script src="config.js"></script>
+</head>
+<body>
+<nav class="topbar"><div class="in">
+  <a class="home" href="https://lekanlawal1.github.io/portfolio-site/#triage"><span class="dot">LL</span>Lekan Lawal</a>
+  <a class="pill" href="https://github.com/lekanlawal1/app-review-insights">Code and method</a>
+</div></nav>
+<div class="band"></div>
+
+<main class="wrap">
+  <header class="hero">
+    <span class="eyebrow">Real App Store reviews · checked AI themes</span>
+    <h1>What do people <span class="hl">really</span> think of an app?</h1>
+    <p class="lead">Pick any iPhone app. In seconds you'll see how its ratings are trending, whether the latest update
+      helped or hurt, and what its users complain about, love and ask for, with real quotes behind every theme.</p>
+  </header>
+
+  <form class="search" id="search" autocomplete="off">
+    <label class="sr" for="q">App name</label>
+    <input id="q" type="search" placeholder="Search an app, e.g. Wealthsimple" maxlength="80">
+    <select id="country" aria-label="App Store country">
+      <option value="ca">Canada</option><option value="us">United States</option>
+      <option value="gb">United Kingdom</option><option value="au">Australia</option>
+    </select>
+    <button class="btn primary" type="submit">Search</button>
+  </form>
+  <div class="picks" id="picks" aria-label="Try one of these">
+    <span>Try:</span>
+    <button type="button" data-id="1403491709">Wealthsimple</button>
+    <button type="button" data-id="634040057">PC Optimum</button>
+    <button type="button" data-id="1058959277">Uber Eats</button>
+    <button type="button" data-id="570060128">Duolingo</button>
+  </div>
+  <div class="results" id="results" hidden></div>
+  <p class="status" id="status" role="status"></p>
+
+  <section id="report" hidden>
+    <div class="app-head" id="app-head"></div>
+
+    <h2 class="section-title">At a glance <small>no AI, straight from the reviews</small></h2>
+    <div class="tiles" id="tiles"></div>
+    <div class="grid2">
+      <div class="card">
+        <h3>Star ratings</h3>
+        <div id="stars-chart"></div>
+      </div>
+      <div class="card">
+        <h3>Rating by app version <small>versions with 10+ reviews</small></h3>
+        <div id="versions"></div>
+      </div>
+    </div>
+    <div class="card">
+      <h3>Week by week</h3>
+      <p class="sub">Reviews per week, and their average rating. A sudden drop usually follows an update or an outage.</p>
+      <div id="weekly-count"></div>
+      <div id="weekly-avg"></div>
+    </div>
+
+    <h2 class="section-title">What people are saying <small>AI themes, checked by code</small></h2>
+    <p class="sub" id="themes-sub"></p>
+    <div id="themes"><p class="empty">Reading the reviews...</p></div>
+    <div class="checks" id="checks"></div>
+
+    <h2 class="section-title">Read the reviews</h2>
+    <div class="filters" id="filters"></div>
+    <div id="list"></div>
+  </section>
+
+  <section class="how">
+    <h2 class="section-title">How it works</h2>
+    <div class="steps">
+      <div><i>1</i><b>Real reviews</b><span>Your browser loads up to 500 of the app's most recent reviews straight from Apple.</span></div>
+      <div><i>2</i><b>Numbers without AI</b><span>Ratings, trends and versions are counted directly, so they're exact.</span></div>
+      <div><i>3</i><b>AI suggests themes</b><span>Google's Gemini groups the reviews and picks quotes. It never produces a number.</span></div>
+      <div><i>4</i><b>Code checks the AI</b><span>Every quote must appear word for word in the review it cites, and every theme is counted from the reviews themselves.</span></div>
+    </div>
+    <p class="note">Apple publishes up to 500 recent reviews per app and country, so this covers recent months, not an
+      app's whole history. Reviews are public; nothing you search is stored, and AI answers for popular apps are reused
+      for a day.</p>
+  </section>
+</main>
+<div class="tip" id="tip" role="tooltip" hidden></div>
+<footer class="wrap foot">Reviews: Apple App Store customer reviews feed. Themes: Google Gemini, checked in your browser.
+  Built by <a href="https://lekanlawal1.github.io/portfolio-site/">Lekan Lawal</a>.</footer>
+<script src="analysis.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
