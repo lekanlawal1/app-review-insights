@@ -79,6 +79,23 @@ const ReviewAnalysis = (() => {
       .sort((a, b) => (a.first < b.first ? 1 : -1));
   }
 
+  // ---------------------------------------------------------------- the headline
+  // The two big words at the top: the all-time rating against the recent one. A gap of 0.3 stars
+  // or more reads as worse or better; anything closer reads as steady. No all-time rating (a new
+  // app) shows the recent one alone.
+  function headline(recent, allTime) {
+    const f = (v) => v.toFixed(1);
+    if (recent == null) return null;
+    if (!allTime) return { top: "RECENTLY", bottom: f(recent), tone: "flat", note: "No all-time rating yet, so these recent reviews are the whole picture." };
+    const gap = recent - allTime;
+    if (gap <= -0.3) return { top: `RATED ${f(allTime)}`, bottom: `NOW ${f(recent)}`, tone: "worse", gap,
+      note: "Recent reviewers are less happy than the all-time rating suggests." };
+    if (gap >= 0.3) return { top: `RATED ${f(allTime)}`, bottom: `NOW ${f(recent)}`, tone: "better", gap,
+      note: "Recent reviewers are happier than the all-time rating suggests." };
+    return { top: `RATED ${f(allTime)}`, bottom: `STILL ${f(recent)}`, tone: "flat", gap,
+      note: "Recent reviews are in line with the all-time rating." };
+  }
+
   // ---------------------------------------------------------------- checking the AI
   // Quotes are compared after folding the differences a model introduces when copying text:
   // curly quotes, dashes, case and runs of whitespace.
@@ -147,7 +164,7 @@ const ReviewAnalysis = (() => {
     return { themes: themes.filter((t) => t.count > 0), report };
   }
 
-  return { parsePage, dedupe, summary, weekOf, weekly, byVersion, fold, checkThemes };
+  return { parsePage, dedupe, summary, weekOf, weekly, byVersion, headline, fold, checkThemes };
 })();
 
 if (typeof module !== "undefined") module.exports = ReviewAnalysis;

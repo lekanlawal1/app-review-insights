@@ -97,3 +97,14 @@ test("a quote only counts if its review is in that theme", () => {
   assert.equal(report.quotesVerified, 1);
   assert.deepEqual(themes[0].quotes.map((q) => q.i), [1]);
 });
+
+test("the headline reads worse, better or steady from the gap, and copes with a new app", () => {
+  const worse = A.headline(3.4, 4.6);
+  assert.equal(worse.top, "RATED 4.6"); assert.equal(worse.bottom, "NOW 3.4"); assert.equal(worse.tone, "worse");
+  assert.equal(A.headline(4.7, 4.1).tone, "better");
+  const steady = A.headline(4.5, 4.6);
+  assert.equal(steady.bottom, "STILL 4.5"); assert.equal(steady.tone, "flat");
+  assert.equal(A.headline(4.32, 4.6).tone, "flat");         // a 0.28 gap is not a story
+  assert.equal(A.headline(3.9, null).top, "RECENTLY");
+  assert.equal(A.headline(null, 4.6), null);
+});

@@ -8,73 +8,89 @@
 <link rel="icon" href="https://lekanlawal1.github.io/portfolio-site/assets/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css?v=20261105">
 <script src="https://lekanlawal1.github.io/portfolio-site/portfolio-bar.js" data-project="triage" defer></script>
 <script src="config.js"></script>
 </head>
 <body>
-<nav class="topbar"><div class="in">
-  <a class="home" href="https://lekanlawal1.github.io/portfolio-site/#triage"><span class="dot">LL</span>Lekan Lawal</a>
-  <a class="pill" href="https://github.com/lekanlawal1/app-review-insights">Code and method</a>
-</div></nav>
-<div class="band"></div>
+<!-- the hero: big type split around the app's icon, floating in 3D. Before an app is picked it
+     asks the question; after, it shows the app's own two numbers. -->
+<section class="hero" id="hero" data-mode="ask">
+  <nav class="nav">
+    <a class="lg" href="./" aria-label="App Review Insights, start again">ARI</a>
+    <span class="mid">App Review Insights</span>
+    <span class="links"><a href="https://github.com/lekanlawal1/app-review-insights">Code and method</a>
+      <a href="https://lekanlawal1.github.io/portfolio-site/#triage">Lekan Lawal</a></span>
+  </nav>
+  <div class="stage">
+    <h1 class="big w1" id="w1">WHAT DO</h1>
+    <div class="side s1" id="s1">Pick any iPhone app. See how its rating is really trending, whether the latest
+      update helped or hurt, and what its users complain about, love and ask for, with a real quote behind every theme.</div>
+    <div class="obj" id="obj" aria-hidden="true"><div class="float"><div class="tilt" id="tilt"></div></div><div class="shadow"></div></div>
+    <p class="big w2" id="w2">USERS <em>THINK?</em></p>
+    <p class="side s2" id="s2">Real App Store reviews. Numbers counted, never guessed. AI themes checked word for word.</p>
+
+    <div class="ask" id="ask">
+      <form class="search" id="search" autocomplete="off">
+        <label class="sr" for="q">App name</label>
+        <input id="q" type="search" placeholder="Search an app, e.g. Wealthsimple" maxlength="80">
+        <select id="country" aria-label="App Store country">
+          <option value="ca">Canada</option><option value="us">United States</option>
+          <option value="gb">United Kingdom</option><option value="au">Australia</option>
+        </select>
+        <button class="pill fill" type="submit">Search</button>
+      </form>
+      <div class="picks" id="picks" aria-label="Try one of these">
+        <span>Try</span>
+        <button type="button" data-id="1403491709">Wealthsimple</button>
+        <button type="button" data-id="634040057">PC Optimum</button>
+        <button type="button" data-id="1058959277">Uber Eats</button>
+        <button type="button" data-id="570060128">Duolingo</button>
+      </div>
+      <div class="results" id="results" hidden></div>
+      <p class="status" id="status" role="status"></p>
+    </div>
+    <div class="btns" id="btns" hidden><a class="pill fill" href="#themes-title">See the themes</a><button type="button" class="pill" id="again">Try another app</button></div>
+    <div class="side s3" id="s3">App Store reviews · read in your browser</div>
+  </div>
+</section>
 
 <main class="wrap">
-  <header class="hero">
-    <span class="eyebrow">Real App Store reviews · checked AI themes</span>
-    <h1>What do people <span class="hl">really</span> think of an app?</h1>
-    <p class="lead">Pick any iPhone app. In seconds you'll see how its ratings are trending, whether the latest update
-      helped or hurt, and what its users complain about, love and ask for, with real quotes behind every theme.</p>
-  </header>
-
-  <form class="search" id="search" autocomplete="off">
-    <label class="sr" for="q">App name</label>
-    <input id="q" type="search" placeholder="Search an app, e.g. Wealthsimple" maxlength="80">
-    <select id="country" aria-label="App Store country">
-      <option value="ca">Canada</option><option value="us">United States</option>
-      <option value="gb">United Kingdom</option><option value="au">Australia</option>
-    </select>
-    <button class="btn primary" type="submit">Search</button>
-  </form>
-  <div class="picks" id="picks" aria-label="Try one of these">
-    <span>Try:</span>
-    <button type="button" data-id="1403491709">Wealthsimple</button>
-    <button type="button" data-id="634040057">PC Optimum</button>
-    <button type="button" data-id="1058959277">Uber Eats</button>
-    <button type="button" data-id="570060128">Duolingo</button>
-  </div>
-  <div class="results" id="results" hidden></div>
-  <p class="status" id="status" role="status"></p>
-
   <section id="report" hidden>
     <div class="app-head" id="app-head"></div>
 
-    <h2 class="section-title">At a glance <small>no AI, straight from the reviews</small></h2>
+    <span class="lbl">At a glance · no AI, straight from the reviews</span>
     <div class="tiles" id="tiles"></div>
+
+    <span class="lbl">Week by week</span>
+    <h2 class="section-title">When did it change?</h2>
+    <p class="sub">The average rating each week, against the all-time rating (dashed). Marked weeks averaged under 3 stars.</p>
+    <div class="card">
+      <div id="weekly-avg"></div>
+      <div class="legend" id="weekly-legend"></div>
+      <div id="weekly-count"></div>
+    </div>
+
     <div class="grid2">
       <div class="card">
         <h3>Star ratings</h3>
         <div id="stars-chart"></div>
       </div>
       <div class="card">
-        <h3>Rating by app version <small>versions with 10+ reviews</small></h3>
+        <h3>Did the updates help? <small>versions with 10+ reviews, newest first</small></h3>
         <div id="versions"></div>
       </div>
     </div>
-    <div class="card">
-      <h3>Week by week</h3>
-      <p class="sub">Reviews per week, and their average rating. A sudden drop usually follows an update or an outage.</p>
-      <div id="weekly-count"></div>
-      <div id="weekly-avg"></div>
-    </div>
 
-    <h2 class="section-title">What people are saying <small>AI themes, checked by code</small></h2>
+    <span class="lbl">What people are saying · AI themes, checked by code</span>
+    <h2 class="section-title" id="themes-title">The themes, with real quotes</h2>
     <p class="sub" id="themes-sub"></p>
     <div id="themes"><p class="empty">Reading the reviews...</p></div>
     <div class="checks" id="checks"></div>
 
-    <h2 class="section-title">Read the reviews</h2>
+    <span class="lbl">The reviews</span>
+    <h2 class="section-title">Read them yourself</h2>
     <div class="filters" id="filters"></div>
     <div id="list"></div>
   </section>
@@ -95,8 +111,8 @@
 <div class="tip" id="tip" role="tooltip" hidden></div>
 <footer class="wrap foot">Reviews: Apple App Store customer reviews feed. Themes: Google Gemini, checked in your browser.
   Built by <a href="https://lekanlawal1.github.io/portfolio-site/">Lekan Lawal</a>.</footer>
-<script src="analysis.js"></script>
-<script src="app.js"></script>
+<script src="analysis.js?v=20261105"></script>
+<script src="app.js?v=20261105"></script>
 <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "50d455a6ac424591b8acaa97dc3975a9"}'></script>
 </body>
 </html>

@@ -9,7 +9,8 @@ const API = (window.REVIEWS_API || "").replace(/\/$/, "");
 const PAGES = 10;                                     // Apple serves at most 10 pages of 50
 const fmt1 = (v) => (v == null ? "n/a" : v.toFixed(1));
 const pct = (v) => (v == null ? "n/a" : v > 0 && v < 0.005 ? "under 1%" : `${Math.round(v * 100)}%`);
-const stars = (n) => "★".repeat(n) + "☆".repeat(5 - n);
+// filled stars, then the empty ones faded (not outline stars, which read as filled at small sizes)
+const stars = (n) => `${"★".repeat(n)}<span class="off">${"★".repeat(5 - n)}</span>`;
 const monthDay = (d) => new Date(d + "T00:00:00Z").toLocaleDateString("en-CA", { month: "short", day: "numeric", timeZone: "UTC" });
 const fullDate = (d) => new Date(d + "T00:00:00Z").toLocaleDateString("en-CA", { year: "numeric", month: "short", day: "numeric", timeZone: "UTC" });
 const status = (msg, bad = false) => { $("status").textContent = msg; $("status").classList.toggle("bad", bad); };
@@ -28,6 +29,36 @@ function attachTip(el, html) {
   el.addEventListener("mouseenter", show); el.addEventListener("focus", show);
   el.addEventListener("mouseleave", () => { tip.hidden = true; }); el.addEventListener("blur", () => { tip.hidden = true; });
 }
+
+// ------------------------------------------------------------------ the hero
+// The icon: a face plus 14 layers behind it, so it has thickness. Before an app is chosen the face
+// is a star; after, it's the app's own App Store icon.
+const hero = $("hero");
+function setFace(html) {
+  $("tilt").innerHTML = Array.from({ length: 14 }, (_, i) => `<i style="--z:${i + 1}"></i>`).join("") + `<div class="face">${html}</div>`;
+}
+setFace(`<span class="glyph">★</span>`);
+if (!matchMedia("(prefers-reduced-motion: reduce)").matches) addEventListener("pointermove", (e) => {
+  const x = e.clientX / innerWidth - 0.5, y = e.clientY / innerHeight - 0.5;
+  $("tilt").style.setProperty("--ry", `${-26 + x * 30}deg`); $("tilt").style.setProperty("--rx", `${16 - y * 22}deg`);
+});
+function heroFor(app, s) {
+  const h = A.headline(s.average, app.averageUserRating);
+  const [lead, ...rest] = h.bottom.split(" ");
+  hero.dataset.mode = "app"; hero.dataset.tone = h.tone;
+  $("w1").textContent = h.top;
+  $("w2").innerHTML = rest.length ? `${esc(lead)} <em>${esc(rest.join(" "))}</em>` : `<em>${esc(lead)}</em>`;
+  $("s1").innerHTML = `${s.count} recent App Store reviews of ${esc(app.trackName)}, read and checked in your browser.`;
+  $("s2").textContent = `${pct(s.lowShare)} of recent reviews are 1 or 2 stars. ${h.note}`;
+  $("s3").textContent = `${app.trackName} · ${$("country").selectedOptions[0].text} App Store`;
+  const big = (app.artworkUrl512 || app.artworkUrl100 || "").replace(/\/\d+x\d+bb\./, "/512x512bb.");
+  setFace(big ? `<img src="${esc(big)}" alt="">` : `<span class="glyph">★</span>`);
+  $("btns").hidden = false;
+}
+$("again").addEventListener("click", () => {
+  hero.dataset.mode = "ask"; $("btns").hidden = true;
+  $("q").focus({ preventScroll: true });
+});
 
 // ------------------------------------------------------------------ search
 async function search(term) {
@@ -87,7 +118,8 @@ async function load(app, country) {
   $("report").hidden = false;
   drawGlance();
   drawList();
-  $("report").scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+  // the hero now shows this app's story; bring it into view if the visitor had scrolled
+  if (scrollY > 40) scrollTo({ top: 0, behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
   loadThemes();
 }
 
@@ -98,12 +130,14 @@ function drawGlance() {
   $("app-head").innerHTML = `<img src="${esc(app.artworkUrl100)}" alt=""><div><h2>${esc(app.trackName)}</h2>
     <p>${esc(app.sellerName)} · ${s.count} most recent reviews, ${fullDate(s.from)} to ${fullDate(s.to)}</p></div>`;
   const allTime = app.averageUserRating;
+  heroFor(app, s);
+  const tone = A.headline(s.average, allTime).tone;
   $("tiles").innerHTML = [
-    [fmt1(s.average), "average of these recent reviews"],
-    [allTime ? fmt1(allTime) : "n/a", `all-time App Store rating (${(app.userRatingCount || 0).toLocaleString("en-CA")} ratings)`],
+    [`${fmt1(s.average)}★`, "average of these recent reviews", tone],
+    [allTime ? `${fmt1(allTime)}★` : "n/a", `all-time App Store rating (${(app.userRatingCount || 0).toLocaleString("en-CA")} ratings)`],
     [pct(s.lowShare), "of recent reviews are 1 or 2 stars"],
     [String(s.count), `reviews since ${monthDay(s.from)}`],
-  ].map(([v, l]) => `<div class="tile"><div class="v">${v}</div><div class="l">${l}</div></div>`).join("");
+  ].map(([v, l, t]) => `<div class="tile ${t || ""}"><div class="v">${v}</div><div class="l">${l}</div></div>`).join("");
 
   // star ratings: one series, so one colour; counts are labelled on each row
   const max = Math.max(...s.distribution, 1);
@@ -117,20 +151,31 @@ function drawGlance() {
   });
 
   const versions = A.byVersion(reviews);
-  $("versions").innerHTML = versions.length ? `<table class="ver"><thead><tr><th>Version</th><th>First seen</th>
-      <th class="n">Reviews</th><th class="n">Average</th><th class="n">1 to 2 stars</th></tr></thead><tbody>${versions.slice(0, 8).map((v) => `
-      <tr><td>${esc(v.version)}</td><td>${monthDay(v.first)}</td><td class="n">${v.count}</td><td class="n">${fmt1(v.average)}</td><td class="n">${pct(v.lowShare)}</td></tr>`).join("")}
+  // each version against the one before it (the next row, as the list is newest first)
+  const shown = versions.slice(0, 8);
+  $("versions").innerHTML = versions.length ? `<table class="ver"><thead><tr><th>Version</th><th class="fs">First seen</th>
+      <th class="n">Reviews</th><th class="n">Average</th><th class="n">vs previous</th></tr></thead><tbody>${shown.map((v, i) => {
+        const prev = versions[i + 1], d = prev ? v.average - prev.average : null;
+        const change = d == null ? "" : Math.abs(d) < 0.05 ? "same" : `<span class="${d < 0 ? "down" : "up"}">${d < 0 ? "▼ −" : "▲ +"}${Math.abs(d).toFixed(1)}</span>`;
+        return `<tr><td>${esc(v.version)}</td><td class="fs">${monthDay(v.first)}</td><td class="n">${v.count}</td><td class="n${v.average < 3 ? " low" : ""}">${fmt1(v.average)}★</td><td class="n">${change}</td></tr>`;
+      }).join("")}
       </tbody></table>` : `<p class="empty">No single version has 10 or more of these reviews.</p>`;
 
   const w = A.weekly(reviews);
+  W = Math.round(Math.min(1000, Math.max(300, $("weekly-avg").clientWidth || 760)));
+  // a week is marked when it averaged under 3 stars: a bad week for any app
+  $("weekly-avg").innerHTML = line(w.map((x) => ({ x: x.week, y: x.average, low: x.average != null && x.average < 3,
+    tip: `<b>Week of ${monthDay(x.week)}</b><br>${x.average == null ? "no reviews" : `${fmt1(x.average)} average from ${x.total} reviews`}` })), 1, 5, allTime);
+  $("weekly-legend").innerHTML = `<span><i style="border-color:var(--ink)"></i>weekly average</span>${allTime ? `<span><i style="border-color:var(--muted);border-top-style:dashed"></i>all-time ${fmt1(allTime)}★</span>` : ""}
+    <span><i style="border-color:var(--peach)"></i>weeks under 3★</span>`;
   $("weekly-count").innerHTML = `<p class="chart-title">Reviews per week</p>` + columns(w.map((x) => ({ x: x.week, y: x.count, tip: `<b>Week of ${monthDay(x.week)}</b><br>${x.count} reviews` })));
-  $("weekly-avg").innerHTML = `<p class="chart-title">Average rating per week (1 to 5)</p>` + line(w.map((x) => ({ x: x.week, y: x.average,
-    tip: `<b>Week of ${monthDay(x.week)}</b><br>${x.average == null ? "no reviews" : `${fmt1(x.average)} average from ${x.total} reviews`}` })), 1, 5);
   for (const id of ["weekly-count", "weekly-avg"]) $(id).querySelectorAll("[data-tip]").forEach((el) => attachTip(el, decodeURIComponent(el.dataset.tip)));
 }
 
 // Small SVG charts. One axis each; the volume and the rating are two charts, never one with two scales.
-const W = 760, H = 150, PAD = { l: 34, r: 8, t: 8, b: 22 };
+// drawn at the chart's real width, so the text stays its true size on a phone
+let W = 760;
+const H = 150, PAD = { l: 34, r: 8, t: 8, b: 22 };
 function frame(points, yMin, yMax, ticks, bands = false) {
   const iw = W - PAD.l - PAD.r, ih = H - PAD.t - PAD.b;
   // bars sit in the middle of equal slots; line points span edge to edge
@@ -153,14 +198,17 @@ function columns(points) {
   const bars = points.map((p, i) => p.y > 0 ? `<rect class="col" tabindex="0" data-tip="${encodeURIComponent(p.tip)}" x="${f.x(i) - bw / 2}" y="${f.y(p.y)}" width="${bw}" height="${f.y(0) - f.y(p.y)}" rx="3"/>` : "").join("");
   return `<svg class="chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="Reviews per week">${f.grid}<line class="baseline" x1="${PAD.l}" x2="${W - PAD.r}" y1="${f.y(0)}" y2="${f.y(0)}"/>${bars}${f.labels}</svg>`;
 }
-function line(points, yMin, yMax) {
+function line(points, yMin, yMax, ref) {
   if (!points.length) return "";
   const f = frame(points, yMin, yMax, [1, 2, 3, 4, 5]);
+  const refLine = ref ? `<line class="ref" x1="${PAD.l}" x2="${W - PAD.r}" y1="${f.y(ref)}" y2="${f.y(ref)}"/><text class="ref-label" x="${W - PAD.r}" y="${f.y(ref) - 6}" text-anchor="end">all-time ${fmt1(ref)}★</text>` : "";
+  const real = points.map((p, i) => [p, i]).filter(([p]) => p.y != null);
+  const area = real.length > 1 ? `<path class="area" d="M${f.x(real[0][1])},${f.y(yMin)} ${real.map(([p, i]) => `L${f.x(i)},${f.y(p.y)}`).join(" ")} L${f.x(real[real.length - 1][1])},${f.y(yMin)}Z"/>` : "";
   // break the line across empty weeks instead of drawing through them
   let d = "", pen = false;
   points.forEach((p, i) => { if (p.y == null) { pen = false; return; } d += `${pen ? "L" : "M"}${f.x(i)},${f.y(p.y)}`; pen = true; });
-  const dots = points.map((p, i) => p.y == null ? "" : `<circle class="hit" tabindex="0" data-tip="${encodeURIComponent(p.tip)}" cx="${f.x(i)}" cy="${f.y(p.y)}" r="9" fill="transparent"/><circle class="dotm" cx="${f.x(i)}" cy="${f.y(p.y)}" r="4"/>`).join("");
-  return `<svg class="chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="Average rating per week">${f.grid}<path class="line" d="${d}"/>${dots}${f.labels}</svg>`;
+  const dots = points.map((p, i) => p.y == null ? "" : `<circle class="hit" tabindex="0" data-tip="${encodeURIComponent(p.tip)}" cx="${f.x(i)}" cy="${f.y(p.y)}" r="9" fill="transparent"/><circle class="dotm${p.low ? " low" : ""}" cx="${f.x(i)}" cy="${f.y(p.y)}" r="${p.low ? 4.5 : 3}"/>`).join("");
+  return `<svg class="chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="Average rating per week">${f.grid}${area}${refLine}<path class="line" d="${d}"/>${dots}${f.labels}</svg>`;
 }
 // A small trend line: fixed height, stretched to the card's width, line kept at 2px.
 function sparkline(weeks) {
@@ -199,19 +247,31 @@ function drawThemes(themes, report, cached) {
   const { reviews } = state;
   $("themes-sub").textContent = `${themes.length} themes across ${reviews.length} reviews, largest first. Counts and ratings are worked out from the reviews, not by the AI.`;
   const LABEL = { complaint: "Complaint", praise: "Praise", request: "Request" };
-  $("themes").className = "themes";
-  $("themes").innerHTML = themes.map((t) => `<article class="theme">
-      <div class="theme-head"><h3>${esc(t.name)}</h3><span class="kind ${t.kind}">${LABEL[t.kind]}</span>
-        <span class="theme-stats">${t.count} reviews (${pct(t.share)}) · average ${fmt1(t.average)} ★</span></div>
-      <p class="summary">${esc(t.summary)}</p>
-      ${t.quotes.map((q) => { const r = reviews[q.i]; return `<blockquote>“${esc(q.quote)}”<small>${stars(r.rating)} · ${fullDate(r.date)}${r.version ? ` · version ${esc(r.version)}` : ""}</small></blockquote>`; }).join("")}
-      ${t.doubt ? `<p class="doubt">Check this one: the AI called it ${t.kind === "complaint" ? "a complaint, but these reviews average 4 stars or more" : "praise, but these reviews average 2 stars or less"}.</p>` : ""}
-      ${t.weekly.length > 1 ? `<div class="spark-wrap">${sparkline(t.weekly)}</div>` : ""}
-      <button class="more" type="button" data-theme="${t.id}">Read all ${t.count} reviews</button>
-    </article>`).join("") || `<p class="empty">No themes came back.</p>`;
-  $("themes").querySelectorAll(".more").forEach((b) => b.addEventListener("click", () => {
-    state.filter = { stars: 0, theme: b.dataset.theme }; drawList(); $("list").scrollIntoView({ behavior: "smooth", block: "start" });
-  }));
+  $("themes").className = themes.length ? "themes" : "";
+  if (!themes.length) { $("themes").innerHTML = `<p class="empty">No themes came back.</p>`; }
+  else {
+    // a list of every theme, beside the open one: its summary, its checked quotes, its trend
+    const open = (id) => {
+      const t = themes.find((x) => x.id === id) || themes[0];
+      $("themes").querySelectorAll(".trow").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.theme === t.id)));
+      $("theme-open").innerHTML = `<span class="kicker t-${t.kind}">${LABEL[t.kind]} · ${t.count} reviews (${pct(t.share)}) · average ${fmt1(t.average)}★</span>
+        <h3>${esc(t.name)}</h3><p class="summary">${esc(t.summary)}</p>
+        ${t.quotes.map((q) => { const r = reviews[q.i]; return `<blockquote>“${esc(q.quote)}”<small><span class="st">${stars(r.rating)}</span> · ${fullDate(r.date)}${r.version ? ` · version ${esc(r.version)}` : ""}</small></blockquote>`; }).join("")}
+        ${t.doubt ? `<p class="doubt">Check this one: the AI called it ${t.kind === "complaint" ? "a complaint, but these reviews average 4 stars or more" : "praise, but these reviews average 2 stars or less"}.</p>` : ""}
+        ${t.weekly.length > 1 ? `<div class="spark-wrap">${sparkline(t.weekly)}</div>` : ""}
+        <button class="pill more" type="button" data-theme="${t.id}">Read all ${t.count} reviews</button>`;
+      $("theme-open").querySelector(".more").addEventListener("click", () => {
+        state.filter = { stars: 0, theme: t.id }; drawList(); $("list").scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+    };
+    $("themes").innerHTML = `<div class="tlist" role="group" aria-label="Themes">${themes.map((t) => `<button type="button" class="trow" data-theme="${t.id}" aria-pressed="false">
+        <span><b><span class="k ${t.kind}"></span>${esc(t.name)}</b><small>${LABEL[t.kind]} · ${t.count} reviews · ${pct(t.share)}</small></span>
+        <em class="t-${t.kind}">${fmt1(t.average)}★</em></button>`).join("")}</div>
+      <article class="theme" id="theme-open" aria-live="polite"></article>`;
+    $("themes").querySelectorAll(".trow").forEach((b) => b.addEventListener("click", () => open(b.dataset.theme)));
+    // open the biggest complaint first, if there is one: that's usually why someone is looking
+    open((themes.find((t) => t.kind === "complaint") || themes[0]).id);
+  }
   const rejected = report.quotesProposed - report.quotesVerified;
   $("checks").innerHTML = `Checked in your browser: ${report.quotesVerified} of ${report.quotesProposed} AI quotes found word for word in a review that belongs to their theme`
     + `${rejected ? ` (${rejected} thrown out)` : ""}; ${pct(report.coverage)} of reviews placed in at least one theme`
@@ -234,11 +294,19 @@ function drawList() {
   if (theme) shown = shown.filter(({ i }) => theme.members.includes(i));
   const LIMIT = 60;
   $("list").innerHTML = shown.slice(0, LIMIT).map(({ r }) => `<article class="review">
-      <div class="meta"><span class="stars" aria-label="${r.rating} stars">${stars(r.rating)}</span>${fullDate(r.date)}${r.version ? ` · version ${esc(r.version)}` : ""}</div>
+      <div class="meta"><span class="stars" role="img" aria-label="${r.rating} stars">${stars(r.rating)}</span>${fullDate(r.date)}${r.version ? ` · version ${esc(r.version)}` : ""}</div>
       <b>${esc(r.title)}</b><p>${esc(r.text)}</p></article>`).join("")
     + (shown.length > LIMIT ? `<p class="note">Showing the newest ${LIMIT} of ${shown.length}.</p>` : "")
     + (!shown.length ? `<p class="empty">No reviews match.</p>` : "");
 }
+
+// redraw the charts at the new width when the window changes size
+let resizeTimer, lastWidth = innerWidth;
+addEventListener("resize", () => {
+  if (innerWidth === lastWidth) return;          // phones fire resize when the address bar hides
+  lastWidth = innerWidth; clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(() => { if (state) drawGlance(); }, 250);
+});
 
 // ------------------------------------------------------------------ a shared link opens the same app
 (async () => {

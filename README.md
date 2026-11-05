@@ -8,6 +8,9 @@ uses before you see it.
 
 ## What it shows
 
+- **The headline:** the app's own icon floats between its two numbers, all-time against recent
+  ("RATED 4.6 / NOW 3.4"). A gap of 0.3 stars or more reads as worse or better; anything closer reads
+  "STILL", so a small wobble isn't presented as a story (`headline` in `site/analysis.js`, tested).
 - **At a glance, no AI:** the average of the latest reviews against the app's all-time rating, the share
   of 1 and 2 star reviews, the star breakdown, reviews and average rating week by week, and rating by app
   version, so you can see whether an update helped or hurt.
