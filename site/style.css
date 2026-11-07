@@ -219,3 +219,7 @@ svg.chart.spark { height: 40px; }
   .steps { grid-template-columns: 1fr; }
   .ver .fs { display: none; }
 }
+
+/* drawn stars instead of the star character */
+svg.star { display: inline-block; width: .82em; height: .82em; vertical-align: -.06em; }
+.face .glyph svg.star { width: .78em; height: .78em; vertical-align: 0; }

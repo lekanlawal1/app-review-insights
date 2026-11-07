@@ -4,13 +4,17 @@
 
 const A = ReviewAnalysis;
 const $ = (id) => document.getElementById(id);
-const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+// emojis in reviews, quotes and app names are left out of what the page shows (the checks still
+// compare against the original text)
+const EMOJI = /[\p{Extended_Pictographic}\u{1F1E6}-\u{1F1FF}\u{FE0F}\u{200D}\u{20E3}\u{1F3FB}-\u{1F3FF}]/gu;
+const STAR = '<svg class="star" viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.55 5.2 5.75.84-4.15 4.05.98 5.71L10 14.7l-5.13 2.7.98-5.71L1.7 7.64l5.75-.84z" fill="currentColor"/></svg>';
+const esc = (s) => String(s ?? "").replace(EMOJI, "").replace(/ {2,}/g, " ").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 const API = (window.REVIEWS_API || "").replace(/\/$/, "");
 const PAGES = 10;                                     // Apple serves at most 10 pages of 50
 const fmt1 = (v) => (v == null ? "n/a" : v.toFixed(1));
 const pct = (v) => (v == null ? "n/a" : v > 0 && v < 0.005 ? "under 1%" : `${Math.round(v * 100)}%`);
 // filled stars, then the empty ones faded (not outline stars, which read as filled at small sizes)
-const stars = (n) => `${"★".repeat(n)}<span class="off">${"★".repeat(5 - n)}</span>`;
+const stars = (n) => `${STAR.repeat(n)}<span class="off">${STAR.repeat(5 - n)}</span>`;
 const monthDay = (d) => new Date(d + "T00:00:00Z").toLocaleDateString("en-CA", { month: "short", day: "numeric", timeZone: "UTC" });
 const fullDate = (d) => new Date(d + "T00:00:00Z").toLocaleDateString("en-CA", { year: "numeric", month: "short", day: "numeric", timeZone: "UTC" });
 const status = (msg, bad = false) => { $("status").textContent = msg; $("status").classList.toggle("bad", bad); };
@@ -37,7 +41,7 @@ const hero = $("hero");
 function setFace(html) {
   $("tilt").innerHTML = Array.from({ length: 14 }, (_, i) => `<i style="--z:${i + 1}"></i>`).join("") + `<div class="face">${html}</div>`;
 }
-setFace(`<span class="glyph">★</span>`);
+setFace(`<span class="glyph">${STAR}</span>`);
 if (!matchMedia("(prefers-reduced-motion: reduce)").matches) addEventListener("pointermove", (e) => {
   const x = e.clientX / innerWidth - 0.5, y = e.clientY / innerHeight - 0.5;
   $("tilt").style.setProperty("--ry", `${-26 + x * 30}deg`); $("tilt").style.setProperty("--rx", `${16 - y * 22}deg`);
@@ -52,7 +56,7 @@ function heroFor(app, s) {
   $("s2").textContent = `${pct(s.lowShare)} of recent reviews are 1 or 2 stars. ${h.note}`;
   $("s3").textContent = `${app.trackName} · ${$("country").selectedOptions[0].text} App Store`;
   const big = (app.artworkUrl512 || app.artworkUrl100 || "").replace(/\/\d+x\d+bb\./, "/512x512bb.");
-  setFace(big ? `<img src="${esc(big)}" alt="">` : `<span class="glyph">★</span>`);
+  setFace(big ? `<img src="${esc(big)}" alt="">` : `<span class="glyph">${STAR}</span>`);
   $("btns").hidden = false;
 }
 $("again").addEventListener("click", () => {
@@ -133,8 +137,8 @@ function drawGlance() {
   heroFor(app, s);
   const tone = A.headline(s.average, allTime).tone;
   $("tiles").innerHTML = [
-    [`${fmt1(s.average)}★`, "average of these recent reviews", tone],
-    [allTime ? `${fmt1(allTime)}★` : "n/a", `all-time App Store rating (${(app.userRatingCount || 0).toLocaleString("en-CA")} ratings)`],
+    [`${fmt1(s.average)}${STAR}`, "average of these recent reviews", tone],
+    [allTime ? `${fmt1(allTime)}${STAR}` : "n/a", `all-time App Store rating (${(app.userRatingCount || 0).toLocaleString("en-CA")} ratings)`],
     [pct(s.lowShare), "of recent reviews are 1 or 2 stars"],
     [String(s.count), `reviews since ${monthDay(s.from)}`],
   ].map(([v, l, t]) => `<div class="tile ${t || ""}"><div class="v">${v}</div><div class="l">${l}</div></div>`).join("");
@@ -142,7 +146,7 @@ function drawGlance() {
   // star ratings: one series, so one colour; counts are labelled on each row
   const max = Math.max(...s.distribution, 1);
   $("stars-chart").innerHTML = [5, 4, 3, 2, 1].map((n) => `<div class="hbar" tabindex="0" data-n="${n}">
-    <span>${n} ★</span><span class="track"><i class="fill" style="width:${(s.distribution[n - 1] / max) * 100}%"></i></span>
+    <span>${n} ${STAR}</span><span class="track"><i class="fill" style="width:${(s.distribution[n - 1] / max) * 100}%"></i></span>
     <span class="n">${s.distribution[n - 1]}</span></div>`).join("");
   $("stars-chart").querySelectorAll(".hbar").forEach((el) => {
     const n = +el.dataset.n, c = s.distribution[n - 1];
@@ -157,7 +161,7 @@ function drawGlance() {
       <th class="n">Reviews</th><th class="n">Average</th><th class="n">vs previous</th></tr></thead><tbody>${shown.map((v, i) => {
         const prev = versions[i + 1], d = prev ? v.average - prev.average : null;
         const change = d == null ? "" : Math.abs(d) < 0.05 ? "same" : `<span class="${d < 0 ? "down" : "up"}">${d < 0 ? "▼ −" : "▲ +"}${Math.abs(d).toFixed(1)}</span>`;
-        return `<tr><td>${esc(v.version)}</td><td class="fs">${monthDay(v.first)}</td><td class="n">${v.count}</td><td class="n${v.average < 3 ? " low" : ""}">${fmt1(v.average)}★</td><td class="n">${change}</td></tr>`;
+        return `<tr><td>${esc(v.version)}</td><td class="fs">${monthDay(v.first)}</td><td class="n">${v.count}</td><td class="n${v.average < 3 ? " low" : ""}">${fmt1(v.average)}${STAR}</td><td class="n">${change}</td></tr>`;
       }).join("")}
       </tbody></table>` : `<p class="empty">No single version has 10 or more of these reviews.</p>`;
 
@@ -166,8 +170,8 @@ function drawGlance() {
   // a week is marked when it averaged under 3 stars: a bad week for any app
   $("weekly-avg").innerHTML = line(w.map((x) => ({ x: x.week, y: x.average, low: x.average != null && x.average < 3,
     tip: `<b>Week of ${monthDay(x.week)}</b><br>${x.average == null ? "no reviews" : `${fmt1(x.average)} average from ${x.total} reviews`}` })), 1, 5, allTime);
-  $("weekly-legend").innerHTML = `<span><i style="border-color:var(--ink)"></i>weekly average</span>${allTime ? `<span><i style="border-color:var(--muted);border-top-style:dashed"></i>all-time ${fmt1(allTime)}★</span>` : ""}
-    <span><i style="border-color:var(--peach)"></i>weeks under 3★</span>`;
+  $("weekly-legend").innerHTML = `<span><i style="border-color:var(--ink)"></i>weekly average</span>${allTime ? `<span><i style="border-color:var(--muted);border-top-style:dashed"></i>all-time ${fmt1(allTime)}${STAR}</span>` : ""}
+    <span><i style="border-color:var(--peach)"></i>weeks under 3${STAR}</span>`;
   $("weekly-count").innerHTML = `<p class="chart-title">Reviews per week</p>` + columns(w.map((x) => ({ x: x.week, y: x.count, tip: `<b>Week of ${monthDay(x.week)}</b><br>${x.count} reviews` })));
   for (const id of ["weekly-count", "weekly-avg"]) $(id).querySelectorAll("[data-tip]").forEach((el) => attachTip(el, decodeURIComponent(el.dataset.tip)));
 }
@@ -201,7 +205,7 @@ function columns(points) {
 function line(points, yMin, yMax, ref) {
   if (!points.length) return "";
   const f = frame(points, yMin, yMax, [1, 2, 3, 4, 5]);
-  const refLine = ref ? `<line class="ref" x1="${PAD.l}" x2="${W - PAD.r}" y1="${f.y(ref)}" y2="${f.y(ref)}"/><text class="ref-label" x="${W - PAD.r}" y="${f.y(ref) - 6}" text-anchor="end">all-time ${fmt1(ref)}★</text>` : "";
+  const refLine = ref ? `<line class="ref" x1="${PAD.l}" x2="${W - PAD.r}" y1="${f.y(ref)}" y2="${f.y(ref)}"/><text class="ref-label" x="${W - PAD.r}" y="${f.y(ref) - 6}" text-anchor="end">all-time ${fmt1(ref)} stars</text>` : "";
   const real = points.map((p, i) => [p, i]).filter(([p]) => p.y != null);
   const area = real.length > 1 ? `<path class="area" d="M${f.x(real[0][1])},${f.y(yMin)} ${real.map(([p, i]) => `L${f.x(i)},${f.y(p.y)}`).join(" ")} L${f.x(real[real.length - 1][1])},${f.y(yMin)}Z"/>` : "";
   // break the line across empty weeks instead of drawing through them
@@ -254,7 +258,7 @@ function drawThemes(themes, report, cached) {
     const open = (id) => {
       const t = themes.find((x) => x.id === id) || themes[0];
       $("themes").querySelectorAll(".trow").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.theme === t.id)));
-      $("theme-open").innerHTML = `<span class="kicker t-${t.kind}">${LABEL[t.kind]} · ${t.count} reviews (${pct(t.share)}) · average ${fmt1(t.average)}★</span>
+      $("theme-open").innerHTML = `<span class="kicker t-${t.kind}">${LABEL[t.kind]} · ${t.count} reviews (${pct(t.share)}) · average ${fmt1(t.average)} stars</span>
         <h3>${esc(t.name)}</h3><p class="summary">${esc(t.summary)}</p>
         ${t.quotes.map((q) => { const r = reviews[q.i]; return `<blockquote>“${esc(q.quote)}”<small><span class="st">${stars(r.rating)}</span> · ${fullDate(r.date)}${r.version ? ` · version ${esc(r.version)}` : ""}</small></blockquote>`; }).join("")}
         ${t.doubt ? `<p class="doubt">Check this one: the AI called it ${t.kind === "complaint" ? "a complaint, but these reviews average 4 stars or more" : "praise, but these reviews average 2 stars or less"}.</p>` : ""}
@@ -266,7 +270,7 @@ function drawThemes(themes, report, cached) {
     };
     $("themes").innerHTML = `<div class="tlist" role="group" aria-label="Themes">${themes.map((t) => `<button type="button" class="trow" data-theme="${t.id}" aria-pressed="false">
         <span><b><span class="k ${t.kind}"></span>${esc(t.name)}</b><small>${LABEL[t.kind]} · ${t.count} reviews · ${pct(t.share)}</small></span>
-        <em class="t-${t.kind}">${fmt1(t.average)}★</em></button>`).join("")}</div>
+        <em class="t-${t.kind}">${fmt1(t.average)}${STAR}</em></button>`).join("")}</div>
       <article class="theme" id="theme-open" aria-live="polite"></article>`;
     $("themes").querySelectorAll(".trow").forEach((b) => b.addEventListener("click", () => open(b.dataset.theme)));
     // open the biggest complaint first, if there is one: that's usually why someone is looking
@@ -276,7 +280,7 @@ function drawThemes(themes, report, cached) {
   $("checks").innerHTML = `Checked in your browser: ${report.quotesVerified} of ${report.quotesProposed} AI quotes found word for word in a review that belongs to their theme`
     + `${rejected ? ` (${rejected} thrown out)` : ""}; ${pct(report.coverage)} of reviews placed in at least one theme`
     + (report.complaintAverage != null && report.praiseAverage != null
-      ? `; complaint themes average ${fmt1(report.complaintAverage)} ★ and praise themes ${fmt1(report.praiseAverage)} ★` : "")
+      ? `; complaint themes average ${fmt1(report.complaintAverage)} stars and praise themes ${fmt1(report.praiseAverage)} stars` : "")
     + `.${cached ? " These themes were worked out earlier today for the same reviews." : ""}`;
 }
 
@@ -285,7 +289,7 @@ function drawList() {
   const { reviews, themes, filter } = state;
   const theme = themes?.find((t) => t.id === filter.theme);
   const buttons = [`<button type="button" data-s="0" aria-pressed="${!filter.stars && !theme}">All ${reviews.length}</button>`]
-    .concat([5, 4, 3, 2, 1].map((n) => `<button type="button" data-s="${n}" aria-pressed="${filter.stars === n}">${n} ★</button>`))
+    .concat([5, 4, 3, 2, 1].map((n) => `<button type="button" data-s="${n}" aria-pressed="${filter.stars === n}" aria-label="${n} stars">${n} ${STAR}</button>`))
     .concat(theme ? [`<button type="button" aria-pressed="true" data-s="0">${esc(theme.name)} ×</button>`] : []);
   $("filters").innerHTML = buttons.join("");
   $("filters").querySelectorAll("button").forEach((b) => b.addEventListener("click", () => { state.filter = { stars: +b.dataset.s, theme: null }; drawList(); }));
