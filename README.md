@@ -1,69 +1,39 @@
 # App Review Insights
 
 Pick any iPhone app and see what its users love, hate and ask for, from its latest App Store reviews.
-Ratings, trends and versions are counted exactly; an AI suggests themes, and code checks every quote it
-uses before you see it.
 
-**Live:** [lekanlawal1.github.io/app-review-insights](https://lekanlawal1.github.io/app-review-insights/)
+[Try it on any app](https://lekanlawal1.github.io/app-review-insights/)
 
-## What it shows
+![App Review Insights for Wealthsimple: recent reviews average 3.5 stars against an all-time 4.6](docs/screenshot.png)
 
-- **The headline:** the app's own icon floats between its two numbers, all-time against recent
-  ("RATED 4.6 / NOW 3.4"). A gap of 0.3 stars or more reads as worse or better; anything closer reads
-  "STILL", so a small wobble isn't presented as a story (`headline` in `site/analysis.js`, tested).
-- **At a glance, no AI:** the average of the latest reviews against the app's all-time rating, the share
-  of 1 and 2 star reviews, the star breakdown, reviews and average rating week by week, and rating by app
-  version, so you can see whether an update helped or hurt.
-- **What people are saying:** themes sorted by size, each marked as a complaint, praise or a feature
-  request, with real quotes, how many reviews mention it, their average rating and a weekly trend.
-- **The reviews themselves,** filtered by stars or by theme.
+## Why I built it
 
-For example, Wealthsimple's latest 500 Canadian reviews average 3.5 stars against an all-time 4.6, and
-34% are 1 or 2 stars: the recent experience is a lot worse than the headline rating suggests.
+An app's star rating hides a lot. Years of happy users can keep it at 4.6 while this month's users are having a terrible time. Wealthsimple is a good example: 4.6 stars all-time, but its latest 500 Canadian reviews average 3.5, and a third are 1 or 2 stars. I wanted a quick way to see that gap, and the reason for it.
 
 ## How it works
 
-```
-your browser -> Apple's review feed (up to 500 most recent reviews; both endpoints allow browser requests)
-             -> analysis.js: counts, weeks, versions (no AI)
-             -> Cloudflare Worker -> Gemini proposes themes, quotes and which reviews belong to each
-             -> analysis.js checks the answer, then the page draws it
-```
+The page pulls up to 500 recent reviews straight from Apple's public feed. The numbers come from plain code, not AI: the star breakdown, ratings week by week, and the average rating for each app version, which is often the most useful part because it shows which update made things worse.
 
-The model never produces a number. What it proposes is checked in the browser:
+Then Gemini reads the reviews and groups them into complaints, praise and feature requests, with quotes. Before you see any of it, the page checks the AI's work. Every quote has to appear word for word in a real review, and that review has to be one the AI put in the same theme. The AI never writes a number. How many reviews mention a theme, and their average rating, are counted by code.
 
-| Check | What happens when it fails |
-|---|---|
-| The quote appears word for word in the review it cites (ignoring curly quotes, dashes and case) | quote thrown out and counted |
-| That review is one the model placed in the same theme | quote thrown out ("review not in this theme") |
-| The theme and the review exist | the assignment is dropped |
-| A "complaint" whose reviews average 4+ stars, or "praise" averaging 2 or less | shown with a warning, not trusted |
+## What I found
 
-Every count, share and average comes from the reviews themselves. The page reports, for each app, how many
-quotes passed, how much of the review set the themes cover, and whether complaint themes really do have
-lower ratings than praise themes.
+My first version only checked that quotes existed. Testing showed that wasn't enough: a happy "the premise of the app is exceptional" showed up as evidence under "Slow customer support". The quote was real, but from the wrong review. Now a quote only counts if its review belongs to that theme, and a "complaint" whose reviews average 4 stars or more gets flagged instead of trusted.
 
-**The Worker** keeps the Gemini key secret, accepts requests only from this page, rate-limits new apps per
-visitor, and caches each answer for a day per app, country and set of reviews. Reviews are public, so a
-popular app costs one model call a day however many people look at it.
+On Wealthsimple, all 28 quotes passed both checks, and the complaint themes averaged 2.1 stars against 5.0 for praise, so the labels match how people actually rated.
 
 ## Limits
 
-- Apple publishes at most 500 recent reviews per app and country, so this covers recent months, not an
-  app's whole history. Reviews in the feed are written reviews only, not star-only ratings.
-- Apple limits how many searches one person can make in a minute; the quick picks look apps up by id to
-  save searches.
-- The checks prove quotes are real and come from the right reviews. They don't prove the AI grouped every
-  review the way a person would. A hand-labelled sample would measure that, and it is the next step.
+Apple only shares the 500 most recent written reviews per app and country, so this covers recent months. The checks prove quotes are real and in the right place. They don't prove the AI grouped every review the way a person would. Measuring that needs a hand-labelled sample, which is the next step.
 
 ## Run it
 
 ```bash
-node --test test/*.test.mjs                 # analysis: quote checks, counts, weeks, versions
-(cd worker && node --test test/*.test.mjs)  # the Worker's prompt and origin check
-python3 -m http.server 8799 -d site         # then open http://localhost:8799
+node --test test/*.test.mjs
+(cd worker && node --test test/*.test.mjs)
+python3 -m http.server 8799 -d site       # http://localhost:8799
 ```
 
-Built by [Lekan Lawal](https://lekanlawal1.github.io/portfolio-site/). It works on real data anyone can
-check: every review comes straight from Apple's public feed. For AI triage on real support messages, see
-[Sorted](https://github.com/lekanlawal1/project2-ai-ticket-triage).
+## More
+
+[docs/details.md](docs/details.md) has the full write-up, including every check and what happens when one fails. For AI triage on real support messages, see [Sorted](https://github.com/lekanlawal1/project2-ai-ticket-triage).
