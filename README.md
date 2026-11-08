@@ -64,5 +64,6 @@ node --test test/*.test.mjs                 # analysis: quote checks, counts, we
 python3 -m http.server 8799 -d site         # then open http://localhost:8799
 ```
 
-Built by [Lekan Lawal](https://lekanlawal1.github.io/portfolio-site/). Replaces my earlier AI ticket
-triage project, which sorted synthetic tickets: this one works on real data anyone can check.
+Built by [Lekan Lawal](https://lekanlawal1.github.io/portfolio-site/). It works on real data anyone can
+check: every review comes straight from Apple's public feed. For AI triage on real support messages, see
+[Sorted](https://github.com/lekanlawal1/project2-ai-ticket-triage).
