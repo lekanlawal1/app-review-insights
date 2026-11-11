@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Label reviews | App Review Insights</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="https://lekanlawal1.github.io/portfolio-site/assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root { --bg: #14110E; --panel: rgba(243, 236, 226, .05); --ink: #F3ECE2; --ink-2: #D6CCBF; --muted: #AFA494;
+    --line: rgba(243, 236, 226, .18); --gold: #FFC86B; --mint: #8FE3AE; --peach: #FF8A65; --sky: #9CC3FF; }
+  * { box-sizing: border-box; margin: 0; }
+  html { -webkit-text-size-adjust: 100%; background: var(--bg); }
+  body { background: var(--bg); color: var(--ink); font: 16px/1.55 Inter, system-ui, sans-serif; padding: 0 16px 56px; }
+  main { max-width: 720px; margin: 0 auto; }
+  :focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+  [hidden] { display: none !important; }
+  header { padding: 22px 0 6px; }
+  h1 { font: 600 clamp(1.7rem, 6vw, 2.3rem)/1.1 Outfit, Inter, sans-serif; letter-spacing: -.02em; }
+  .how { margin: 12px 0 0; color: var(--ink-2); }
+  .how b { color: var(--ink); }
+  .bar { position: sticky; top: 0; z-index: 2; background: var(--bg); padding: 12px 0 10px; margin-top: 14px; border-bottom: 1px solid var(--line); }
+  .bar .row { display: flex; justify-content: space-between; gap: 12px; font-size: .9rem; color: var(--muted); }
+  .track { height: 4px; background: var(--line); border-radius: 4px; margin-top: 8px; overflow: hidden; }
+  .track i { display: block; height: 100%; width: 0; background: var(--gold); transition: width .2s; }
+  @media (prefers-reduced-motion: reduce) { .track i { transition: none; } }
+  .card { margin-top: 18px; padding: 18px; border: 1px solid var(--line); border-radius: 16px; background: var(--panel); }
+  .meta { font-size: .82rem; color: var(--muted); letter-spacing: .04em; text-transform: uppercase; }
+  .card h2 { font: 600 1.15rem/1.3 Inter, sans-serif; margin: 6px 0 6px; overflow-wrap: anywhere; }
+  .card p { color: var(--ink-2); white-space: pre-wrap; overflow-wrap: anywhere; }
+  fieldset { border: 0; padding: 0; margin: 22px 0 0; }
+  legend { font-weight: 600; margin-bottom: 8px; padding: 0; }
+  .opt { display: flex; gap: 12px; align-items: flex-start; padding: 12px 14px; margin: 0 0 8px; border: 1px solid var(--line); border-radius: 12px; cursor: pointer; }
+  .opt:hover { background: var(--panel); }
+  .opt:has(input:checked) { border-color: var(--gold); background: rgba(255, 200, 107, .08); }
+  .opt input { margin-top: 4px; width: 18px; height: 18px; flex: none; accent-color: #FFC86B; }
+  .opt b { display: block; }
+  .opt small { display: block; color: var(--muted); font-size: .86rem; margin-top: 2px; }
+  .tag { display: inline-block; margin-left: 8px; font: 600 .68rem Inter, sans-serif; letter-spacing: .06em; text-transform: uppercase; padding: 1px 7px; border-radius: 999px; border: 1px solid var(--line); color: var(--muted); vertical-align: 2px; }
+  .tag.complaint { color: var(--peach); border-color: var(--peach); } .tag.praise { color: var(--mint); border-color: var(--mint); } .tag.request { color: var(--sky); border-color: var(--sky); }
+  .nav { display: flex; gap: 10px; margin-top: 18px; flex-wrap: wrap; }
+  button { font: 600 1rem Inter, sans-serif; padding: 11px 20px; border-radius: 999px; border: 1.5px solid var(--ink); background: none; color: var(--ink); cursor: pointer; }
+  button.go { background: var(--ink); color: var(--bg); }
+  button:disabled { opacity: .4; cursor: default; }
+  .foot { margin-top: 26px; padding-top: 18px; border-top: 1px solid var(--line); color: var(--muted); font-size: .92rem; }
+  .foot p + p { margin-top: 8px; }
+  .keys { font-size: .84rem; color: var(--muted); margin-top: 10px; }
+  kbd { font: 600 .8rem Inter, sans-serif; border: 1px solid var(--line); border-radius: 5px; padding: 0 5px; }
+  .err { color: var(--peach); margin-top: 18px; }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>Label some reviews</h1>
+    <p class="how">This measures how well the AI sorts reviews into themes, and it only works if you label <b>before</b> seeing what the AI chose.
+      For each review, tick <b>every theme it clearly talks about</b>, the way a product manager would file it. If none fit, tick <b>None of these</b> (or just press Next with nothing ticked).
+      Don't overthink it: about 15 seconds each, 100 reviews in all. Your answers save in this browser as you go.</p>
+  </header>
+
+  <div class="bar" id="bar" hidden>
+    <div class="row"><span id="where"></span><span id="done"></span></div>
+    <div class="track" aria-hidden="true"><i id="fill"></i></div>
+  </div>
+
+  <p class="err" id="err" hidden></p>
+
+  <section id="stage" hidden>
+    <article class="card" aria-live="polite">
+      <div class="meta" id="meta"></div>
+      <h2 id="title"></h2>
+      <p id="text"></p>
+    </article>
+    <form id="form" autocomplete="off">
+      <fieldset>
+        <legend>Which of these themes does this review clearly belong to?</legend>
+        <div id="opts"></div>
+      </fieldset>
+    </form>
+    <div class="nav">
+      <button type="button" id="back">Back</button>
+      <button type="button" id="next" class="go">Next</button>
+    </div>
+    <p class="keys">Keys: <kbd>1</kbd> to <kbd>9</kbd> tick a theme, <kbd>0</kbd> ticks None of these, <kbd>Enter</kbd> goes to the next review.</p>
+  </section>
+
+  <section class="foot" id="foot" hidden>
+    <p><b id="count">0</b> reviews labelled.</p>
+    <p>When you're done, download your labels and send me the file. It holds only your ticks, nothing about you.</p>
+    <div class="nav"><button type="button" id="export" class="go">Download my labels</button><button type="button" id="reset">Start over</button></div>
+  </section>
+</main>
+
+<script>
+(() => {
+  const $ = (id) => document.getElementById(id);
+  const KEY = "ari-labels-v1";
+  let sample, items = [], pos = 0, state = { labels: {}, pos: 0 };
+
+  const load = () => { try { return JSON.parse(localStorage.getItem(KEY)) || null; } catch { return null; } };
+  const save = () => { try { localStorage.setItem(KEY, JSON.stringify({ ...state, pos, sampleDate: sample.generated })); } catch {} };
+  const labelOf = (it) => state.labels[it.app.id]?.[it.review.k];
+  const doneCount = () => items.filter(labelOf).length;
+
+  function show() {
+    const it = items[pos], app = it.app, r = it.review;
+    const cur = labelOf(it) || { themes: [], none: false };
+    $("where").textContent = `${app.name}, review ${r.k + 1} of ${app.reviews.length}`;
+    $("done").textContent = `${doneCount()} of ${items.length} labelled`;
+    $("fill").style.width = `${(doneCount() / items.length) * 100}%`;
+    $("meta").textContent = `${r.rating} out of 5 stars  |  ${r.date}`;
+    $("title").textContent = r.title || "(no title)";
+    $("text").textContent = r.text;
+    $("opts").innerHTML = "";
+    app.themes.forEach((t, n) => {
+      const l = document.createElement("label"); l.className = "opt";
+      const cb = document.createElement("input"); cb.type = "checkbox"; cb.value = t.id; cb.checked = cur.themes.includes(t.id);
+      const box = document.createElement("div");
+      const name = document.createElement("b"); name.textContent = `${n < 9 ? n + 1 + ". " : ""}${t.name}`;
+      const tag = document.createElement("span"); tag.className = "tag " + t.kind; tag.textContent = t.kind; name.append(tag);
+      const sm = document.createElement("small"); sm.textContent = t.summary;
+      box.append(name, sm); l.append(cb, box); $("opts").append(l);
+    });
+    const none = document.createElement("label"); none.className = "opt";
+    const nb = document.createElement("input"); nb.type = "checkbox"; nb.value = "__none"; nb.checked = cur.none;
+    const nd = document.createElement("div"); const nt = document.createElement("b"); nt.textContent = "0. None of these";
+    nd.append(nt); none.append(nb, nd); $("opts").append(none);
+    $("back").disabled = pos === 0;
+    $("next").textContent = pos === items.length - 1 ? "Finish" : "Next";
+    $("count").textContent = doneCount();
+    $("foot").hidden = doneCount() === 0;
+  }
+
+  // ticking a theme clears "None"; ticking "None" clears the themes
+  $("opts").addEventListener("change", (e) => {
+    const boxes = [...$("opts").querySelectorAll("input")];
+    if (e.target.value === "__none" && e.target.checked) boxes.forEach((b) => { if (b !== e.target) b.checked = false; });
+    else if (e.target.checked) boxes.find((b) => b.value === "__none").checked = false;
+  });
+
+  // Moving forward records the review (nothing ticked counts as "None of these"). Going back, exporting or
+  // leaving never records a review you have not answered, so merely looking at one cannot label it.
+  function commit(answering = false) {
+    const it = items[pos], boxes = [...$("opts").querySelectorAll("input")];
+    const themes = boxes.filter((b) => b.checked && b.value !== "__none").map((b) => b.value);
+    const none = boxes.find((b) => b.value === "__none").checked;
+    if (!answering && !labelOf(it) && !themes.length && !none) return;
+    (state.labels[it.app.id] = state.labels[it.app.id] || {})[it.review.k] = { themes, none: none || themes.length === 0 };
+    save();
+  }
+  const go = (d) => { commit(d > 0); pos = Math.min(items.length - 1, Math.max(0, pos + d)); save(); show(); window.scrollTo({ top: 0 }); };
+  $("next").addEventListener("click", () => go(1));
+  $("back").addEventListener("click", () => go(-1));
+  document.addEventListener("keydown", (e) => {
+    if ($("stage").hidden || e.metaKey || e.ctrlKey || e.altKey) return;
+    if (e.key === "Enter") { e.preventDefault(); go(1); return; }
+    if (/^[0-9]$/.test(e.key)) {
+      const boxes = [...$("opts").querySelectorAll("input")];
+      const b = e.key === "0" ? boxes[boxes.length - 1] : boxes[Number(e.key) - 1];
+      if (b && b.value !== (e.key === "0" ? "" : "__none")) { b.checked = !b.checked; b.dispatchEvent(new Event("change", { bubbles: true })); }
+    }
+  });
+
+  $("export").addEventListener("click", () => {
+    commit();
+    const labels = {};
+    for (const it of items) { const l = labelOf(it); if (l) (labels[it.app.id] = labels[it.app.id] || {})[it.review.k] = l; }
+    const blob = new Blob([JSON.stringify({ sampleDate: sample.generated, exported: new Date().toISOString(), labels }, null, 1)], { type: "application/json" });
+    const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = "labels.json"; a.click();
+    setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+  });
+  $("reset").addEventListener("click", () => {
+    if (!confirm("Delete every label you have made in this browser?")) return;
+    state = { labels: {}, pos: 0 }; pos = 0; try { localStorage.removeItem(KEY); } catch {} show();
+  });
+
+  fetch("sample.json").then((r) => { if (!r.ok) throw new Error(`HTTP ${r.status}`); return r.json(); }).then((s) => {
+    sample = s;
+    for (const app of s.apps) for (const review of app.reviews) items.push({ app, review });
+    const saved = load();
+    if (saved && saved.sampleDate === s.generated) { state = { labels: saved.labels || {}, pos: saved.pos || 0 }; pos = Math.min(state.pos, items.length - 1); }
+    $("bar").hidden = false; $("stage").hidden = false; show();
+  }).catch((e) => { $("err").hidden = false; $("err").textContent = `Could not load the review sample (${e.message}).`; });
+})();
+</script>
+</body>
+</html>

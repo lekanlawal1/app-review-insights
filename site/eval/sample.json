@@ -1,0 +1,840 @@
+{
+ "generated": "2026-11-11",
+ "model": "gemini-3-flash-preview",
+ "prompt": "v1",
+ "seed": 20261111,
+ "apps": [
+  {
+   "id": "1403491709",
+   "name": "Wealthsimple",
+   "country": "ca",
+   "themes": [
+    {
+     "id": "t8",
+     "name": "General Praise for UX",
+     "kind": "praise",
+     "summary": "A large volume of users praise the app for being intuitive, modern, and superior to traditional banking apps."
+    },
+    {
+     "id": "t2",
+     "name": "App Stability and Performance",
+     "kind": "complaint",
+     "summary": "Frequent reports of the app crashing on launch, lagging during trades, and overheating devices."
+    },
+    {
+     "id": "t10",
+     "name": "Marketing and Gamification",
+     "kind": "complaint",
+     "summary": "Some users find the frequent ads, giveaways, and 'prediction markets' distracting or predatory."
+    },
+    {
+     "id": "t5",
+     "name": "Account Verification and Access",
+     "kind": "complaint",
+     "summary": "Users report being locked out of accounts during verification or having funds held for extended periods without explanation."
+    },
+    {
+     "id": "t7",
+     "name": "Feature Requests and Improvements",
+     "kind": "request",
+     "summary": "Users are asking for advanced charting, better transaction search, and more granular budgeting tools."
+    },
+    {
+     "id": "t4",
+     "name": "Customer Support and AI",
+     "kind": "complaint",
+     "summary": "Many users find the AI chatbot unhelpful and report long wait times or lack of response from human agents."
+    },
+    {
+     "id": "t3",
+     "name": "UI and Navigation Changes",
+     "kind": "complaint",
+     "summary": "Users dislike frequent interface updates that hide holdings, require more clicks, or make navigation less intuitive."
+    },
+    {
+     "id": "t1",
+     "name": "iPad and Tablet Support",
+     "kind": "complaint",
+     "summary": "Users are frustrated by the lack of a native iPad app, broken landscape orientation, and UI scaling issues on tablets."
+    },
+    {
+     "id": "t6",
+     "name": "Fees and Currency Conversion",
+     "kind": "complaint",
+     "summary": "Complaints regarding high USD conversion fees, new crypto fees, and the cost of USD accounts."
+    },
+    {
+     "id": "t9",
+     "name": "Forced Updates and Compatibility",
+     "kind": "complaint",
+     "summary": "Users on older devices or iOS versions are frustrated by mandatory updates that prevent account access."
+    }
+   ],
+   "reviews": [
+    {
+     "k": 0,
+     "rating": 1,
+     "title": "IPad app sucks!",
+     "text": "Love wealthsimple however their ipad version is the worst. They need to fix it asap",
+     "date": "2026-11-03"
+    },
+    {
+     "k": 1,
+     "rating": 3,
+     "title": "Provide an App for iPad",
+     "text": "The WS services are great, but the WS App should able the use of full screen of an iPad rather than having a iPhone view.",
+     "date": "2026-11-02"
+    },
+    {
+     "k": 2,
+     "rating": 5,
+     "title": "Simple, Modern, and Easy to use Banking Experience",
+     "text": "I’ve been using Wealthsimple and really enjoy how simple and user-friendly the app is. The interface is clean, easy to navigate, and not unnecessarily complicated. Fund transfers are quick and convenient, whether through Interac e-Transfer or between accounts. I’d highly recommend Wealthsimple to anyone looking for a modern, technologically advanced financial app that makes managing money easy.",
+     "date": "2026-10-28"
+    },
+    {
+     "k": 3,
+     "rating": 5,
+     "title": "Highly Recommended",
+     "text": "This is a really good and considerate banking/finance app. The team’s innovative solutions and features are my main reasons for staying, along with the zero bank charges. I had a few other accounts, and I’ve moved most of them to Wealthsimple. It's really that good and simple, hahaha",
+     "date": "2026-10-24"
+    },
+    {
+     "k": 4,
+     "rating": 2,
+     "title": "Recent update - average price",
+     "text": "With the last update is not possible now to visualize the average price of my positions if these are distributed across different accounts , now I have to calculate manually the  total average cost, making the user experience more difficult",
+     "date": "2026-10-24"
+    },
+    {
+     "k": 5,
+     "rating": 1,
+     "title": "They are the worst Stay Away",
+     "text": "They constantly update their terms and conditions and will not respect your privacy. You don’t know what you’re agreeing when they constantly update their policies. They required me to send them a picture with my ID in my hand and asked me to share it with a third party for me to log into my account. They didn’t even let me close my account. Every time I called the customer service agents said different things. They do not accept any other information including your SIN or personal information. I regret registering with this bank. Stay away!!!!!!!",
+     "date": "2026-10-23"
+    },
+    {
+     "k": 6,
+     "rating": 1,
+     "title": "Horrendously unreliable",
+     "text": "Since they forced me to switch from mastercard to visa, nothing has been working at all, can’t have any trust in this as my only bank, can’t have any reliable access to my money in the bank account. also absolutely horrible customer service, complete waste of my time.",
+     "date": "2026-10-18"
+    },
+    {
+     "k": 7,
+     "rating": 5,
+     "title": "Greatest App of All time",
+     "text": "Smooth UI, good customer service, versatile with different accounts, overall just great.\nBest way to describe is when opening the app, I feel like I’m walking into the Apple Store",
+     "date": "2026-10-17"
+    },
+    {
+     "k": 8,
+     "rating": 1,
+     "title": "Ios support",
+     "text": "It should work on ios 15.. Restrict on ios is frustrating Please make it work on ios 15..\n\nAs per help page, it should work at least (proper /improper).. but it is giving me mandatory update option before login page - contrasting the statement. Please make it work atleast on ios15",
+     "date": "2026-10-14"
+    },
+    {
+     "k": 9,
+     "rating": 1,
+     "title": "iPad app is terrible",
+     "text": "See above",
+     "date": "2026-10-09"
+    },
+    {
+     "k": 10,
+     "rating": 1,
+     "title": "Selling my stocks without permission",
+     "text": "This platform liquidated my holdings without my authorization. I strongly advise exercising caution before using their services.",
+     "date": "2026-10-08"
+    },
+    {
+     "k": 11,
+     "rating": 5,
+     "title": "Money on super charge!",
+     "text": "I cannot say anything that will convince you this is the best app. I recommend reading books by John C. Boggle and Warren Buffet and then look at the features provided by this app and you will know why this is the best.\nUpdate on 2025-07-08: I had already given 5 stars but I was tempted to do it again. I just want to thank everyone related to the app. If you are beginning your “intentional” financial journey, use WealthSimple!\n\nUpdate on 2025-09-16: This was already an amazing life tool but now the pinned accounts feature just took it up a notch! I would request to make the “for you” and “holdings” less in your face.",
+     "date": "2026-10-08"
+    },
+    {
+     "k": 12,
+     "rating": 5,
+     "title": "Best exchange and savings accounts",
+     "text": "Trust me from a crypto and stocks perspective as a Canadian there really isn’t any competition or better choice! Being rewarded for inviting others and holding stocks in your TFSA is unmatched and made very easy by their interface and UI, amazing job wealthsimple!",
+     "date": "2026-10-08"
+    },
+    {
+     "k": 13,
+     "rating": 1,
+     "title": "Worst customer service",
+     "text": "My documents are under review since more then a month. Never got clear communication on updates. Ali told me if I want to follow up on process I have to write follow up email but never received any response from him back. It’s fine if you don’t have any update just communicate so I have an idea that you are even working on it or not.",
+     "date": "2026-09-11"
+    },
+    {
+     "k": 14,
+     "rating": 5,
+     "title": "Love it",
+     "text": "It needs some features such as editing the interface as you like",
+     "date": "2026-09-08"
+    },
+    {
+     "k": 15,
+     "rating": 5,
+     "title": "The BEST",
+     "text": "Not a thing wrong with this company or their app .. best financial platform out there.",
+     "date": "2026-09-08"
+    },
+    {
+     "k": 16,
+     "rating": 1,
+     "title": "They are cheater",
+     "text": "I have $17000 nuvve holding shares they did liquidate all without warning and just provide me $300 value omg and when i contact to support they dont have any solution for me . I understand that NVVE moved to OTC and became ineligible. However, my entire 248-share position was liquidated at approximately US$1.24 per share, resulting in only US$307.27. Please provide the exact liquidation date/time, execution price, market/venue used, and explain why my full position was liquidated rather than transferred to a non-registered account. Please also confirm whether the US$1.24 price was the actual market execution price or an internally determined corporate-action value.",
+     "date": "2026-09-06"
+    },
+    {
+     "k": 17,
+     "rating": 5,
+     "title": "Best app ever",
+     "text": "What else can I say other than they do a really good job understanding the user and work around that! They know our needs and bring solutions on a well designed app. Everything is smooth, easy and way better than any other traditional or virtual bank! I have been recommending them for years and will keep doing it!! Let’s go Wealthsimple!!!!!",
+     "date": "2026-08-29"
+    },
+    {
+     "k": 18,
+     "rating": 1,
+     "title": "This app consumes a lot of data",
+     "text": "Be careful with this app on the iPhone because it consumes a lot of data. It took 1 gb for a 10 min of usage. It is a common problem",
+     "date": "2026-08-25"
+    },
+    {
+     "k": 19,
+     "rating": 5,
+     "title": "The Best app",
+     "text": "C’est de loin la meilleure de toutes les applications financières que j’ai eu à utiliser.",
+     "date": "2026-08-20"
+    },
+    {
+     "k": 20,
+     "rating": 5,
+     "title": "Amazing and I never rate apps",
+     "text": "Few years now on Wealthsimple, amazing platform. No account fees for diy investing, no trading fees, tons of perks, quick support emails. The app works really well and looks great. What more can you ask for? No more “big” banks with “big” fees!",
+     "date": "2026-08-13"
+    },
+    {
+     "k": 21,
+     "rating": 2,
+     "title": "Terrible app version again!",
+     "text": "Keep the app simple, remove (add option) to remove all the estimation or by XX age you’ll have $$$$$. They are all terribly wrong and there has to be a way to not see it.\nThere should be an option to remove stupid widgets.",
+     "date": "2026-08-11"
+    },
+    {
+     "k": 22,
+     "rating": 5,
+     "title": "J’aime beaucoup",
+     "text": "J’aime cette application. Elle me sert à mettre les sous non calculer dans mon budget et quand je suis mal pris je sais que je peux compter sur ce compte pour me dépanner. De plus ceci m’aide à refaire mon crédit.",
+     "date": "2026-08-05"
+    },
+    {
+     "k": 23,
+     "rating": 3,
+     "title": "News tab",
+     "text": "Why you removed the news related to specific stock ?? Very disappointed .. also earnings date must be added \n\nYes , it’s simple interface unlike complex one’s  but we need basic news about particular stock … how are supposed to know ?? By visiting online ? \n\nPls bring back that news colours and also pls add earning day section",
+     "date": "2026-08-04"
+    },
+    {
+     "k": 24,
+     "rating": 5,
+     "title": "Simply the best!",
+     "text": "This is by far the best banking app, it was easy to use, UI is great, and everything is just fantastic. I love wealthsimple.",
+     "date": "2026-08-04"
+    },
+    {
+     "k": 25,
+     "rating": 5,
+     "title": "Excellent Investment Option",
+     "text": "Use this code when signing up to get a free $25 (T&C apply):\nwww.wealthsimple.com/invite/\nYZOREH\n\nWealthsimple is great for people wishing to take control of their financial future. I solely manage my TFSA and enjoy the lack fees and red tape. Although I still maintain an account with a traditional banking institution, Wealthsimple is an insured and legitimate banking option capable of offering a chequing, savings, and other unregistered and registered accounts. Additionally, the platform has been introducing less traditional assets and opportunities to its catalogue, such as crypto currency or speculative trading. All in all, Wealthsimple is a solid option for all endeavours of banking, most chiefly the independence and lack of fees associated with its registered accounts.",
+     "date": "2026-07-31"
+    },
+    {
+     "k": 26,
+     "rating": 1,
+     "title": "Great Features, Too Many Bugs",
+     "text": "The platform is filled with bugs, and it feels like every update introduces even more. Stability and reliability have noticeably declined, making the app frustrating to use at times. That said, I genuinely like Wealthsimple and the features it offers. It’s a fantastic product with huge potential, but the growing number of bugs is hurting the overall experience. I hope the team focuses on fixing existing issues before rolling out new features.",
+     "date": "2026-07-20"
+    },
+    {
+     "k": 27,
+     "rating": 4,
+     "title": "Get $25 bonus",
+     "text": "wealthsimple.com/invite/AWT8VK\nUse this link or refer code AWT8VK to get $25. Thank you",
+     "date": "2026-07-13"
+    },
+    {
+     "k": 28,
+     "rating": 1,
+     "title": "Deposit cheque",
+     "text": "It took 12+ days to process a cheque-deposit. It’s ridiculous",
+     "date": "2026-07-06"
+    },
+    {
+     "k": 29,
+     "rating": 1,
+     "title": "Worst app for options",
+     "text": "Worst options trading experience on this platform. Very slow at times and you loose your trade opportunities. They auto sell options trade without your consent which could lead to severe losses. Be careful and mange your settings appropriately.",
+     "date": "2026-07-01"
+    },
+    {
+     "k": 30,
+     "rating": 5,
+     "title": "Good app",
+     "text": "Changed over instead of letting the bank take my money.  \nVery easy to use.  I recommend this app to everyone.",
+     "date": "2026-06-18"
+    },
+    {
+     "k": 31,
+     "rating": 1,
+     "title": "Crashes on launch when opened",
+     "text": "Since last update. Yay my money is inaccessible!! Unacceptable really.",
+     "date": "2026-06-13"
+    },
+    {
+     "k": 32,
+     "rating": 4,
+     "title": "Glitch Report",
+     "text": "My portfolio available credit is only $1900. When I was repaying a custom amount towards the borrowed money today the app showed available money as $1,000,000.00. Which is not correct. But borrowed money amount was correct amount. I have the screenshot with me if you guys need it.",
+     "date": "2026-06-12"
+    },
+    {
+     "k": 33,
+     "rating": 5,
+     "title": "Great banking app",
+     "text": "I’ve been using it for 6 years now, initially focused on investing then switched it to my main bank account. Super simple to setup and use.",
+     "date": "2026-06-11"
+    },
+    {
+     "k": 34,
+     "rating": 5,
+     "title": "Très bonne banque",
+     "text": "J’ai découvert cette banque par l’entremise d’youtubeur sur la finance personnelle, et je suis vraiment satisfait.\nLe principe des intérêts dans le compte chèque, et sans restriction d’utilisation sonne une nouvelle air de banque pour te montrer que le système actuel bancaire est déchu et que ce modèle d’affaires deviendra la nouvelle norme",
+     "date": "2026-06-11"
+    },
+    {
+     "k": 35,
+     "rating": 5,
+     "title": "Referral code",
+     "text": "This app is awesome for investing, use my referral code to earn some sweet rewards using \n\nWealthsimple.com/invite/D68ZOG",
+     "date": "2026-06-05"
+    },
+    {
+     "k": 36,
+     "rating": 5,
+     "title": "Best finance platform Canada has to offer. +update suggestion",
+     "text": "You’re one stop all in one finance tool for Canadians. Revolutionary and customer first mentality. Been using Wealthsimple for six years now and recommended to everyone I know. \n\nWealthsimple team if you see this, a great feature I think you should add is the ability to make reoccurring charitable donations. Possibly reward clients for participating in some way to encourage it. The same way you can do reoccurring investments, reoccurring charitable donations would be amazing for customer satisfaction. This feature would create a meaningful difference in the world and positive publicity for your company. Just thought I’d share my idea. \n\nKeep up the amazing work, your platform has improved and simplified my life astronomically.",
+     "date": "2026-06-04"
+    },
+    {
+     "k": 37,
+     "rating": 1,
+     "title": "So buggy",
+     "text": "Barely useable today. So many bugs",
+     "date": "2026-06-04"
+    },
+    {
+     "k": 38,
+     "rating": 5,
+     "title": "Better than traditional banks",
+     "text": "I started using Wealthsimple a few years ago and it is now basically the only banking app I use. Everything is so much easier and faster to do compared to traditional banks. And they just keep adding amazing features. Can’t wait for what they’ll be adding next.\nUse code 6REDQG when creating an account for 25$ bonus",
+     "date": "2026-06-03"
+    },
+    {
+     "k": 39,
+     "rating": 5,
+     "title": "Version iPad svp!",
+     "text": "J’adore, mais ce serait très apprécié d’avoir une version iPad et un écran d’accueil avec une connexion multi-utilisateurs pour les appareils partagés.",
+     "date": "2026-05-29"
+    },
+    {
+     "k": 40,
+     "rating": 5,
+     "title": "iPad",
+     "text": "Wish they had a dedicated iPad app!!",
+     "date": "2026-05-21"
+    },
+    {
+     "k": 41,
+     "rating": 3,
+     "title": "Bons services mais App à améliorer",
+     "text": "Wealthsimple n’est pas légalement une banque, mais offre de plus en plus de services qui l’en rapproche, cela a des frais compétitifs, et personnellement j’aime beaucoup, c’est propre, rapide, le support à la clientèle est bon…\n\nLà où il y a des lacunes, c’est au niveau de l’App. Pour commencer, elle est conçue pour iOS et tourné uniquement en “petit format” sur iPad. Ensuite, les données graphiques sur tout ce qui est placements est réduit au strict minimum et avec des représentations régulièrement erronées. Par exemple voir une courbe monter sur une action qui descend. Pour avoir plus, il faut obligatoirement se connecter à son compte sur un ordinateur, ou passer par des App tierces qui cotent en temps réel avec des options poussées.\n\nBref, si le côté simpliste peut correspondre au besoin de monsieur et madame tout le monde, mais pour aller chercher les personnes qui s’intéressent aux marchés boursiers sans en faire leur métier, il y a beaucoup à faire.",
+     "date": "2026-05-15"
+    },
+    {
+     "k": 42,
+     "rating": 2,
+     "title": "Unbelievably slow",
+     "text": "Just opened an account and linked it with my RBC accounts. As my first try, I transferred $100 in on Day 1. Unbelievably, though the $100 was removed in RBC overnight, it took 8 DAYS for the $100 to be available in Wealthsimple side. It is out of my intelligence to understand how a trading platform can work with this kind of slowness. Perhaps WealthSlow is a better name for it.",
+     "date": "2026-05-13"
+    },
+    {
+     "k": 43,
+     "rating": 1,
+     "title": "CSV export is terrible",
+     "text": "Transaction descriptions don’t carry over. Basic feature for managing your personal finances",
+     "date": "2026-05-12"
+    },
+    {
+     "k": 44,
+     "rating": 1,
+     "title": "Best to worse",
+     "text": "Order not showing up, unable to cancel, shows filled up but still in pending. I have lost good amount of money with their glitches. Unable to modify order. Planning to move to ibkr. Call centre never picks call, chabot is ai but dumbest ai i ever experienced. Your apologies aren’t going to bring my money back.",
+     "date": "2026-05-11"
+    },
+    {
+     "k": 45,
+     "rating": 5,
+     "title": "Virtually unblemished performance record",
+     "text": "I’m looking at around five years of working with the Wealthsimple app and I hope to have many more years with it.  It delivers what it says it will do and is frequently updated.  It’s a pleasure to use and I don’t get to say that about many other platforms.",
+     "date": "2026-05-01"
+    },
+    {
+     "k": 46,
+     "rating": 1,
+     "title": "benzinga bug！！！",
+     "text": "pls fix this god damn “benzinga ”bug！ have you been attacked by a trojan？ it‘s a serious security problem with yours app！！！",
+     "date": "2026-04-17"
+    },
+    {
+     "k": 47,
+     "rating": 4,
+     "title": "Love it - just please make an iPad app!",
+     "text": "Very happy with the service and the iOS app, but we desperately need an iPadOS app!  The website is not great on Safari for iPad and regardless less features are available vs. on the app.",
+     "date": "2026-04-13"
+    },
+    {
+     "k": 48,
+     "rating": 1,
+     "title": "WORST APP EVER",
+     "text": "Worst app to ever exist, locks my account permanently with all my life savings inside, and takes days to reply to my email, and still has not gave my money back!",
+     "date": "2026-04-01"
+    },
+    {
+     "k": 49,
+     "rating": 1,
+     "title": "Fraud",
+     "text": "I am dissatisfied with my experience with Wealthsimple. I felt pressured during the onboarding process, particularly as someone considering transferring a significant amount of money, and I do not believe the service I received matched the expectations that were set.\nI was also unhappy with the quality of customer support. Based on my experience, I would not recommend Wealthsimple and would instead suggest using a traditional bank with a longer track record of client service. In one line I would say Wealthsimple is fraud.",
+     "date": "2026-03-30"
+    }
+   ]
+  },
+  {
+   "id": "1058959277",
+   "name": "Uber Eats",
+   "country": "ca",
+   "themes": [
+    {
+     "id": "t1",
+     "name": "Poor customer support",
+     "kind": "complaint",
+     "summary": "Users are frustrated by unhelpful AI chatbots, rude agents who end chats abruptly, and the lack of human phone support."
+    },
+    {
+     "id": "t5",
+     "name": "Cold food and delays",
+     "kind": "complaint",
+     "summary": "Delivery times are often inaccurate, and food frequently arrives cold or soggy due to drivers taking multiple stacked orders."
+    },
+    {
+     "id": "t2",
+     "name": "Refunds denied for errors",
+     "kind": "complaint",
+     "summary": "Customers frequently report being denied refunds for missing items, wrong orders, or food that never arrived despite providing proof."
+    },
+    {
+     "id": "t3",
+     "name": "Excessive fees and markups",
+     "kind": "complaint",
+     "summary": "Users complain about high service fees, delivery charges, and significant price markups compared to in-restaurant menus."
+    },
+    {
+     "id": "t8",
+     "name": "Convenience and reliability",
+     "kind": "praise",
+     "summary": "Some users appreciate the app's ease of use, speed, and the wide variety of restaurant options available."
+    },
+    {
+     "id": "t6",
+     "name": "Cancellation fee disputes",
+     "kind": "complaint",
+     "summary": "Users are charged full price or high fees for orders cancelled within seconds or minutes, even when the restaurant hasn't started the order."
+    },
+    {
+     "id": "t9",
+     "name": "Promotions and discounts",
+     "kind": "praise",
+     "summary": "Users enjoy the frequent promotional offers and discounts that make ordering more affordable."
+    },
+    {
+     "id": "t4",
+     "name": "Unwanted Uber One subscriptions",
+     "kind": "complaint",
+     "summary": "Many users report being signed up for Uber One without consent or finding it nearly impossible to cancel recurring charges."
+    },
+    {
+     "id": "t7",
+     "name": "App compatibility issues",
+     "kind": "complaint",
+     "summary": "Recent updates have made the app unusable for users on older iOS versions (iOS 16/17), forcing them to switch to competitors."
+    }
+   ],
+   "reviews": [
+    {
+     "k": 0,
+     "rating": 1,
+     "title": "Terrible Customer Service through Chat",
+     "text": "I cancelled an order immediately after it being placed….received confirmation email it was cancelled. I then re-ordered and charged it to a different credit card. This all at 5:04 pm. I woke up to an email sent at 3:54 am that they had already started to prepare to food and the refund was never issued. If I had actually received 2 orders then it wouldn’t be a problem….another meal for the following day, but I only received one order. They say they won’t refund me because it’s now considered a cancellation fee?!?!?! 60.57 I’m supposed to choke back for absolutely nothing. Are you serious Uber Eats?! You can see the order wasn’t prepared, no driver assigned or picked up and the order was never delivered! I will NEVER order from Uber Eats again!",
+     "date": "2026-11-08"
+    },
+    {
+     "k": 1,
+     "rating": 1,
+     "title": "Uber Eats Customer Service is Trash",
+     "text": "They are running a scam where they hide other companies products in amongst restaurants, phone you, tell you its not in stock and that they are cancelling the order, then send you the food anyways and still charge you for everything.\n\nThis scam resulted in me getting a double order of food and they refused to do anything about it when I phoned customer service.\n\nI order food and drink for a chinese food place. Turned out the drink, even though listed under the Chinese food, was coming from a different business.\n\nNever using this app ever again. \n\nSide note: first rep I got on the phone pushed my call off to someone else after hearing what was going on and putting me on hold, second rep kept lying saying no one from uber eats called me even though I have record of the call, third one did nothing.",
+     "date": "2026-11-06"
+    },
+    {
+     "k": 2,
+     "rating": 1,
+     "title": "Terrible app wouldn’t download ever again",
+     "text": "Terrible service, terrible drivers and incompetent customer service workers, I have never had a good experience with this app and getting groceries off of here is the worst thing. Fast food arrives cold and hours late usually, and the delivery drivers can never find anything even it it’s right in front of them. They are terrible at reading addresses and 99% of the time they don’t put your order in front of you door so you have to go searching for it. I’ve never seen a worse delivery app than this and I’d highly recommend finding another app other than this one because everything about this is ridiculous and if your order is wrong and you want to cancel it good luck, because you will get none of your money back with the terrible service.",
+     "date": "2026-11-06"
+    },
+    {
+     "k": 3,
+     "rating": 5,
+     "title": "Premium Food Delivery Service",
+     "text": "My experience with Uber Eats has been fantastic. They have several restaurants ranging from African, European, Mediterranean, Asian, North & South American Cuisines. Orders are easy to place, and they arrive on time. This is the most reliable Food Delivery Service out there. 💯",
+     "date": "2026-11-05"
+    },
+    {
+     "k": 4,
+     "rating": 1,
+     "title": "not worth it",
+     "text": "onlt worth it if u seriously buy all the time + if u get uber one but if not this is literally a waste of time and they don’t pay their drivers fair at ALL. look into other more adorable and ethical versions, no ceo needs to make so much much while the drivers are barley making any money",
+     "date": "2026-11-05"
+    },
+    {
+     "k": 5,
+     "rating": 5,
+     "title": "Yo I love this",
+     "text": "Lowkey a bit of a chud but this my most used app this year; 6’ btw",
+     "date": "2026-11-03"
+    },
+    {
+     "k": 6,
+     "rating": 1,
+     "title": "Deliverys",
+     "text": "the fee for just to get food delivered is quite high when i end up watching the app go through couriers who will then cancel the pickup for whatever reason and then sit here for an hour until someone actually wants to pick up my food and deliver it to me and i would have just cancelled for a refund and just gone to get the food myself but i cant because it would have been a waste of food to cancel my order that will end up being soggy by the time it gets to me purely because no one wants to deliver my food.",
+     "date": "2026-11-01"
+    },
+    {
+     "k": 7,
+     "rating": 1,
+     "title": "Terrible customer service!",
+     "text": "Two major items were missing from my order, but Uber’s automated system rejected my refund request. After escalating, support demanded a paper receipt that the restaurant never included! Despite providing photos and order details, Uber refuses to take responsibility. As a paying Uber One subscriber, I find it unacceptable to be charged for food I never received. Extremely disappointing!",
+     "date": "2026-11-01"
+    },
+    {
+     "k": 8,
+     "rating": 4,
+     "title": "Picking up other orders??",
+     "text": "I have had such long wait times with drivers picking up multiple orders at the same time it’s so odd but I once had a driver sit in a subway for 40 minutes after picking up my order waiting to grab more orders. I’m just not crazy about that!",
+     "date": "2026-10-31"
+    },
+    {
+     "k": 9,
+     "rating": 1,
+     "title": "Customer support",
+     "text": "Had the worst experience with customer support. An agent called sidharth was ignoring everything my side had to say",
+     "date": "2026-10-29"
+    },
+    {
+     "k": 10,
+     "rating": 5,
+     "title": "An absolute essential",
+     "text": "There is no need for a review but we all need this essential app - that being said, we should promote more in person and sociable aspect.",
+     "date": "2026-10-29"
+    },
+    {
+     "k": 11,
+     "rating": 1,
+     "title": "Délai",
+     "text": "Ils ont ajouter 30 minutes à ma commande",
+     "date": "2026-10-28"
+    },
+    {
+     "k": 12,
+     "rating": 5,
+     "title": "good credit system",
+     "text": "keeps good track of valued customers if in a difficult situation or card decline",
+     "date": "2026-10-24"
+    },
+    {
+     "k": 13,
+     "rating": 1,
+     "title": "Charged me for a wrong order and missing item and refused to refund",
+     "text": "There should be zero stars or negative stars button. I ordered from a restaurant souvlaki chicken skewers and used buy one get one free offer. And I also ordered tiramisu. However I got a completely different order of 2 different chicken item and no tiramisu at all. I raised this multiple times with Uber and they refuse to refund me for something I didn’t receive. I can’t believe they could just not refund me when they didn’t even give me my order. I had receipt and photo proofs.",
+     "date": "2026-10-24"
+    },
+    {
+     "k": 14,
+     "rating": 1,
+     "title": "Customer Service",
+     "text": "The worst customer service ever. Already deleted the app and wont ever use it again",
+     "date": "2026-10-24"
+    },
+    {
+     "k": 15,
+     "rating": 1,
+     "title": "Arnaque",
+     "text": "Vous payer une fortune pour recevoir votre nourriture froide",
+     "date": "2026-10-23"
+    },
+    {
+     "k": 16,
+     "rating": 1,
+     "title": "This App Is a Scam",
+     "text": "Uber Eats promotions are misleading! I selected a Buy One, Get One Free offer, but I only received one item. Instead of helping, customer support kept repeating the same excuses and closed my chat without resolving anything.\n\nThis feels like a scam. They advertise attractive deals, but when something goes wrong, they refuse to take responsibility.\n\nIt’s not about the money. It’s about honesty and respecting customers.\n\nBe careful! Don’t trust their promotions. Extremely disappointing experience!",
+     "date": "2026-10-23"
+    },
+    {
+     "k": 17,
+     "rating": 1,
+     "title": "Go outside stop using these trash apps",
+     "text": "The customer service is almost as bad as the raw food",
+     "date": "2026-10-22"
+    },
+    {
+     "k": 18,
+     "rating": 1,
+     "title": "Thieves!!!!",
+     "text": "I put an order in and paid. They transferred my order to a store 2.5hrs away. I tried to switch stores so I could actually get food and then they cancelled the whole thing and refused to give me my money back or bring me my food that would have taken 2.5hrs to get to me. They are thieves. They stole from me. Be careful dealing with Uber Eats. Try DoorDash or Skip the Dishes instead, at least you get what you pay for",
+     "date": "2026-10-21"
+    },
+    {
+     "k": 19,
+     "rating": 1,
+     "title": "Garbage service",
+     "text": "Thrash app. No accuracy. Just terrible",
+     "date": "2026-10-21"
+    },
+    {
+     "k": 20,
+     "rating": 1,
+     "title": "Horrible",
+     "text": "I can’t even order here after seeing the charges ! Buy one get one deal. 70$! 36$ is delivery! taxes ! Fees! ! For a 5 minute delivered! Not to mention ! In store the item is 17$ uber already uncharged it to 23$ !!!! They are garbage ! Can’t wait for grab to come to Canada. This corporate USA filth needs to leave or country.",
+     "date": "2026-10-21"
+    },
+    {
+     "k": 21,
+     "rating": 1,
+     "title": "Visa",
+     "text": "Les cartes visa marchent très mal",
+     "date": "2026-10-19"
+    },
+    {
+     "k": 22,
+     "rating": 5,
+     "title": "I love this app",
+     "text": "Late night snacks made easy",
+     "date": "2026-10-18"
+    },
+    {
+     "k": 23,
+     "rating": 1,
+     "title": "They’ll sign you up for uber one without telling you",
+     "text": "This is the third time my credit card has gotten charged for an Uber One membership I never signed up for and never wanted. One of the times I had the membership for 6 months without knowing I was losing $11.29 every month. Don’t download this app unless you want your money stolen from you without giving you an option.",
+     "date": "2026-10-17"
+    },
+    {
+     "k": 24,
+     "rating": 2,
+     "title": "I was stiffed by Uber Eats",
+     "text": "A necessary evil.",
+     "date": "2026-10-17"
+    },
+    {
+     "k": 25,
+     "rating": 1,
+     "title": "Scammers",
+     "text": "The prices change significantly when check out. My $50 order was changed to $80 without warning.  And all they could tell me was it was an “adjustment” but not what the adjustments was for.  Cust svs was useless. Cancelled my uber one subscription! Would never use them again!",
+     "date": "2026-10-17"
+    },
+    {
+     "k": 26,
+     "rating": 1,
+     "title": "Support was useless!",
+     "text": "Order arrived 2hrs after being placed. Lulu on the phone couldn’t give me a new driver (they were just driving around not getting my order when it had been ready), wouldn’t give me a partial refund/credit/coupon and when I asked for a supervisor or manager they said they don’t do that. So than I asked what options do I have? She just told me to call back the same number and hope I get another agent. WHAT IS THE POINT OF SUPPORT LINE IF YOU CANT DO ANYTHING?!?!",
+     "date": "2026-10-16"
+    },
+    {
+     "k": 27,
+     "rating": 1,
+     "title": "Ridiculous tip calculation",
+     "text": "For a buy 1 get 1 free order. The order already plus services fees. But the tip still calculating based on 2 items. I removed this app, and won’t use it anymore until one day this toxic tip culture is gone",
+     "date": "2026-10-15"
+    },
+    {
+     "k": 28,
+     "rating": 1,
+     "title": "Locations",
+     "text": "They will swap locations on you, allowing you to order from across town when you order from the same local restaurant regularly. This would be fine if you could cancel but they won't let you.",
+     "date": "2026-10-14"
+    },
+    {
+     "k": 29,
+     "rating": 1,
+     "title": "Customer service  is the worst",
+     "text": "After many emails and conversations. They do not take the time to understand and close the claims. We done nothing wrong. I finally made a deal directly with the restaurant.  After many orders with Uber , I closed the account.  Poor service, we can do better to help the restaurant and the delivery people",
+     "date": "2026-10-14"
+    },
+    {
+     "k": 30,
+     "rating": 2,
+     "title": "Stealing peoples money",
+     "text": "Ive paid 20$ for a Mcdonald's order and never received it. Some random driver took my order and left with it without never delivering it to me. Ive tried to contact Uber help and they never sent me my money back. Ridiculous, literally stealing from people.",
+     "date": "2026-10-13"
+    },
+    {
+     "k": 31,
+     "rating": 1,
+     "title": "Stole my redeem money",
+     "text": "I bought $80 worth of gift cards and can only redeem one. When i tried to redeem the other error messages kept showing up. So that’s how I lost $40. Anyway, would not recommend. Do doordash or lyft is a better choice",
+     "date": "2026-10-11"
+    },
+    {
+     "k": 32,
+     "rating": 1,
+     "title": "Pricing",
+     "text": "I orders socks from Walmart and it cost me $45 and change when Walmart is charging $5.95 I didn’t and still don’t know this order cost me that much and Uber has an answer this is a rip off I’m gonna delete Uber Eats an stay with skip Uber Eats is ridiculous it’s hard time and these people still ripping us off to get them selves rich.",
+     "date": "2026-10-11"
+    },
+    {
+     "k": 33,
+     "rating": 1,
+     "title": "Uber steals from customers & stay quiet",
+     "text": "Uber has refused to refund hundreds of dollars of food and groceries I have paid for but never received. They also do not tally the digital and physical receipts accurately. According to Uber’s TOS with you as customers, this is a breach in contract and is completely illegal. They’re betting you do not sue. This has happened so many times already. Don’t bother reaching app support, as they will not help with anything. They also will not respond to calls/emails and deleted a lot of their contacts to avoid being contacted. Please try to avoid uber if this happens to you. Call your bank to investigate uber and dispute with sufficient evidence where necessary.",
+     "date": "2026-10-10"
+    },
+    {
+     "k": 34,
+     "rating": 1,
+     "title": "Ripped Off",
+     "text": "Given only a $5 credit when I only received only 1 of 2 dinners purchased as 2 for 1 from Chaska. AND the chicken was MISSING. \n\n1 dinner missing **\nChicken missing **",
+     "date": "2026-10-10"
+    },
+    {
+     "k": 35,
+     "rating": 1,
+     "title": "THEY WILL SCAM YOU AND CHARGE YOU MORE THAN WHAT YOU PAID FOR.",
+     "text": "I honestly try not to leave sour reviews but I’ve had a few complaints with Uber already. However this last time does it. If you do not have the dollars to spare, find a different place to use. Uber will charge you extra and claim it as a hold fee and you will not see that money again it has happened twice to me and their support does nothing about it and is also crazily inaccessible. There is no call line atleast one I can find. \n\nRecently ordered groceries for $117 ish, I ended up being charged around $248 , this was 2 days ago and I can only pray they end up giving me back the extra money they’ve taken from my account.\nI honestly do not recommend to anyone to use this app. Don’t let the deals fool you they add and remove your money so many times just to confuse you. If I didn’t have the extra money for them to charge DOUBLE OR MORE, I’d of been overcharged for the fact that their system is clearly messy. Use DoorDash they have never done this. \n\nUber if you’re reading this. Give me my money back.",
+     "date": "2026-10-07"
+    },
+    {
+     "k": 36,
+     "rating": 1,
+     "title": "The New App (Sept/Oct 2026) is TERRIBLE.",
+     "text": "Guys, the new app is is terrible!  It doesn’t even have a reorder button for my last few orders!  I used to just press 1 button to reorder the same thing as last time.  Now I have to dig around and find each item I want AND I have to retype all my special instructions.  Why?  Why did you remove the reorder button?  Is there a logical reason for this?",
+     "date": "2026-10-06"
+    },
+    {
+     "k": 37,
+     "rating": 5,
+     "title": "Daniel",
+     "text": "Good prices on sum foods",
+     "date": "2026-10-05"
+    },
+    {
+     "k": 38,
+     "rating": 1,
+     "title": "Common sense",
+     "text": "I want to like this poorly run American company with AI as its customer service base . The deals are nice . But it takes the drivers 2+ hours to bring me food from 15 minutes away . Repeated problem . You let them pick up orders over and over again so they get your food , drive 45 minutes in the other direction , then you refund me for cold food . Terrible business model .",
+     "date": "2026-10-05"
+    },
+    {
+     "k": 39,
+     "rating": 1,
+     "title": "Useless since it requires iOS 18.",
+     "text": "Used to like and use the app. Now I can’t because I don’t have iOS 18. It’s the only app on my phone that requires iOS 18. I guess I’ll go back to Skip.",
+     "date": "2026-10-04"
+    },
+    {
+     "k": 40,
+     "rating": 2,
+     "title": "I can’t do anything",
+     "text": "I try to go on the app and it says update so I go to the App Store to update it and it won’t let me update it",
+     "date": "2026-10-04"
+    },
+    {
+     "k": 41,
+     "rating": 1,
+     "title": "No support for older iPhones",
+     "text": "No longer supports older iOS. Frustrating, to say the least.",
+     "date": "2026-09-29"
+    },
+    {
+     "k": 42,
+     "rating": 1,
+     "title": "Takes wayyyy to long with no compensation",
+     "text": "When an order takes an additional 45 minutes to arrive, it’s incredibly frustrating. Especially when you’re given in eta of 30 minutes, but instead it takes an hour and fifteen minutes just because the person picking up the order takes on additional orders?! That should be factored into the eta from the beginning, not slapped on at the end right when you think your food is just 15 minutes away. Super annoying, especially when you’re relying on Uber Eats for food when you have issues limiting you from leaving home. Uber Eats is feeling like less and less of a reliable service these days. Edit- I just spoke with a customer service representative, who was even more unhelpful. It’s evident that Uber has no interest in customer experience or satisfaction. What an idiotic company. Aredla Poojitha was very unhelpful.",
+     "date": "2026-09-26"
+    },
+    {
+     "k": 43,
+     "rating": 1,
+     "title": "Scammed",
+     "text": "Had an order cancelled on me and was told I called the restaurant to cancel the order when I did not!! I contacted support and was not given a refund for a 35 dollar order that I did not even cancel. The uber eats support closed the chat on me while I was still asking questions.",
+     "date": "2026-09-25"
+    },
+    {
+     "k": 44,
+     "rating": 1,
+     "title": "Absolutely ridiculous",
+     "text": "i placed an order that was supposed to take 30 minutes. after i placed it, uber automatically rerouted the order to a pita pit in another city, without telling me, and that 30 minute delivery time turned into 2 hours. obviously if i knew it was going to take that long i wouldn’t have placed it. i contacted customer support multiple times to explain what happened, & instead of actually being helped, customer support just kept sending me the exact same scripted message response about the restaurant accepting the order and their cancellation guidelines. i understood what they were saying the first time. if i had cancelled because i simply changed my mind or didn’t want the food anymore, then fine. but somehow i ended up paying a cancellation fee for a problem i did not create. uber made the mistake, uber charged me the circumstances of the order, and somehow im the one who has to pay for it? awesome!",
+     "date": "2026-09-25"
+    },
+    {
+     "k": 45,
+     "rating": 1,
+     "title": "Long time for delivery",
+     "text": "Long time for delivery",
+     "date": "2026-09-24"
+    },
+    {
+     "k": 46,
+     "rating": 1,
+     "title": "TRASH APP GO DOORDASH",
+     "text": "BAG IS OPENED DELIVERY DRIVERY LITERALLY GARBAGE NO REFUND NOTHING",
+     "date": "2026-09-22"
+    },
+    {
+     "k": 47,
+     "rating": 1,
+     "title": "They are shady",
+     "text": "App wouldn’t let me adjust my tip and it tried to hide the itemized receipt until I committed to paying. Only then did it should it changed me $18 for a tip I couldn’t see or change before paying. Now they don’t want to refund me. Deleting this app. Pay your staff better don’t steal from customers.",
+     "date": "2026-09-22"
+    },
+    {
+     "k": 48,
+     "rating": 3,
+     "title": "Eta",
+     "text": "The eta is always longer and longer and sometimes feels its based on tip we give which is also pre service not post i understand the concern but delivery eta based on tip feels too much",
+     "date": "2026-09-20"
+    },
+    {
+     "k": 49,
+     "rating": 1,
+     "title": "Hidden prices",
+     "text": "Seems like they purposely hide the total price of your order now. This has resulted in me reducing my use of the service",
+     "date": "2026-09-20"
+    }
+   ]
+  }
+ ]
+}

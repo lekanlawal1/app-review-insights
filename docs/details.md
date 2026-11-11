@@ -56,7 +56,7 @@ popular app costs one model call a day however many people look at it.
 - Apple limits how many searches one person can make in a minute; the quick picks look apps up by id to
   save searches.
 - The checks prove quotes are real and come from the right reviews. They don't prove the AI grouped every
-  review the way a person would. A hand-labelled sample would measure that, and it is the next step.
+  review the way a person would. A hand-labelled sample would measure that. The tooling is in `eval/` and `site/eval/`: `eval/collect.mjs` draws 50 reviews from each of two apps (Wealthsimple and Uber Eats, Canada) and runs the same prompt and checks as the live page; `site/eval/label.html` shows each review with the theme list and none of the AI's assignments; `eval/score.mjs` compares the labels with the AI's choices. Precision is the share of the AI's (review, theme) pairs the person also made, recall the share of the person's pairs the AI also made, and each comes with a 95% Wilson interval because 100 reviews is a small sample. No labels have been collected yet.
 
 ## Run it
 

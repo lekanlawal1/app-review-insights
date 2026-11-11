@@ -24,7 +24,7 @@ On Wealthsimple, all 28 quotes passed both checks, and the complaint themes aver
 
 ## Limits
 
-Apple only shares the 500 most recent written reviews per app and country, so this covers recent months. The checks prove quotes are real and in the right place. They don't prove the AI grouped every review the way a person would. Measuring that needs a hand-labelled sample, which is the next step.
+Apple only shares the 500 most recent written reviews per app and country, so this covers recent months. The checks prove quotes are real and in the right place. They don't prove the AI grouped every review the way a person would. Measuring that needs a person's labels, so I built the tooling for it: [a labelling page](https://lekanlawal1.github.io/app-review-insights/eval/label.html) where someone labels 100 reviews without seeing the AI's choices, and [a script](eval/score.mjs) that reports precision and recall with confidence intervals. The labels are the missing step, so there is no result to quote yet.
 
 ## Run it
 
